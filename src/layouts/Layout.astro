@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<meta name="generator" content={Astro.generator} />
+		<title>Frit-Zoervleisj Treffe</title>
+		<style>
+			:root {
+				--color-primary: #9f2572;
+				--color-secondary: #fe9900;
+				--color-accent: #d94f8b;
+				--color-background: #fff0e6;
+				--color-muted: #f7c59f;
+				--font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+			}
+			body {
+				margin: 0;
+				width: 100%;
+				min-height: 100vh;
+				font-family: var(--font-family);
+				background-color: var(--color-background);
+				color: var(--color-primary);
+				display: flex;
+				flex-direction: column;
+				align-items: center;
+				padding: 1rem;
+			}
+			nav {
+				width: 100%;
+				background-color: var(--color-primary);
+				padding: 1rem;
+				text-align: center;
+			}
+			nav a {
+				color: var(--color-background);
+				text-decoration: none;
+				margin: 0 1rem;
+				font-weight: bold;
+			}
+			nav a:hover {
+				color: var(--color-accent);
+			}
+			main {
+				max-width: 800px;
+				width: 100%;
+				background: white;
+				padding: 2rem;
+				border-radius: 8px;
+				box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+			}
+			h1 {
+				color: var(--color-secondary);
+				margin-top: 0;
+			}
+			p {
+				line-height: 1.6;
+				color: var(--color-primary);
+			}
+			img {
+				max-width: 100%;
+				height: auto;
+				margin-top: 1rem;
+				border-radius: 8px;
+				box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+			}
+			@media (max-width: 600px) {
+				body {
+					padding: 0.5rem;
+				}
+				main {
+					padding: 1rem;
+				}
+				nav a {
+					margin: 0 0.5rem;
+				}
+			}
+		</style>
+	</head>
+	<body>
+		<nav>
+			<a href="/lim">Limburgs</a> | <a href="/nl">Nederlands</a>
+		</nav>
+		<main>
+			<slot />
+		</main>
+	</body>
+</html>

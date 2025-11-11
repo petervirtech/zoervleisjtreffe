@@ -1,0 +1,17 @@
+---
+import Layout from '../../layouts/Layout.astro';
+const { lang } = Astro.params;
+
+let translations;
+try {
+  translations = await import(`../../locales/${lang}.json`);
+} catch {
+  translations = await import('../../locales/lim.json');
+}
+---
+
+<Layout>
+  <h1>{translations.welcome}</h1>
+  <p>{translations.description}</p>
+  <img src="/assets/images/flyer.jpg" alt="Flyer" style="max-width: 100%; height: auto; margin-top: 1rem;" />
+</Layout>
