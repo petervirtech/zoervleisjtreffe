@@ -13,7 +13,8 @@
     "home": "Thous",
     "history": "Geschjiedenis",
     "howItWorks": "Zoe wirk 't",
-    "faq": "FAQ"
+    "faq": "FAQ",
+    "signup": "Inschrieve"
   },
   "pages": {
     "home": {
@@ -32,7 +33,27 @@
     },
     "history": {
       "title": "Geschjiedenis",
-      "description": "’t Zuurvlees treffe is al tied mei-ein plek um same te kumpen, te praote en good te ete. Dees editie bouwt d'r auf veur op waat veer al eerdder samen hes gemaak."
+      "intro": "Historie vaan 't Oape Joabiks Frit Zoervleisjtreffe",
+      "lead": "Noa 2 sjlaagde edisies höbbe veer de cadans wer opgepak um eine 3de editie te organisere. Um de 9 jaor is 't fees in Joabik, en meuge veer allemoal os eiges Zoervleisj-resep weer verdedige.",
+      "origin": "Begonne es e gek idee vaan e paar man: luuj vaan Joabik en wied dao boete de kans geve um hun eiges, beste en originele Zoervleisj-resep in good gezelschap te ete, en dat door eine vakjury te laote beoordele.",
+      "chapters": [
+        {
+          "year": "2008",
+          "title": "De ierste editie",
+          "description": "In 2008 höbbe veer mit eine groepe de eerpels vaan John Frijns same gesjild en in friet gesneje. De daag d'r noa weurd 't terrein in 't jeugdhonk ingericht en begonne mit veurbakke. Toe um 18.00 oer de ierste gaste aankwaome, weure de letste friete nog veurgebakke. Wat e werk, mer wat waor 't gezellig in 't auwd jeugdhonk bie de voetbalclub."
+        },
+        {
+          "year": "2017",
+          "title": "De twiede editie",
+          "description": "In 2017 weurd de 2de editie op De Maar gehaoje in feesttènte. Dees kier höbbe veer de friete oetbesteed aan Frituur Proche, die ouch de friete vaan John höbbe gesneje en veurgebakke. 't Weurd weer eine sjiek gezellige editie."
+        },
+        {
+          "year": "2026",
+          "title": "De derde editie",
+          "description": "Op vriedig 4 september 2026 is de 3de editie vaan 't Oape Joabiks Frit Zoervleisjtreffe. Veer viere 't onder de tènt in de wei bie Brasserie De Maar. De friete kómme dit jaor vaan Sweet and Savoury, en neet te vergaeite: de dranks vaan de Brasserie en de beerkes vaan Brouwerij De Maar."
+        }
+      ],
+      "closing": "'t Wurt zowiezoe eine sjoen weekend, want op 5 september is ouch de 2de Kal en Zeng Plant Middig."
     },
     "howItWorks": {
       "title": "Zoe wirk 't",

@@ -28,19 +28,20 @@ const { lang = 'lim', menu = [], languages = [], pageTitle = 'Frit-Zoervleisj Tr
 				font-family: var(--font-family);
 				background-color: var(--color-background);
 				color: var(--color-primary);
-				padding: 1rem;
+				padding: clamp(0.5rem, 2vw, 1.25rem);
 				display: flex;
 				flex-direction: column;
 				align-items: center;
-				gap: 1rem;
+				gap: clamp(0.75rem, 2vw, 1.1rem);
 			}
 			main {
-				max-width: 800px;
+				max-width: 860px;
 				width: 100%;
 				background: white;
-				padding: 2rem;
+				padding: clamp(1rem, 3.5vw, 2rem);
 				border-radius: 1.25rem;
 				box-shadow: 0 14px 40px rgba(70, 19, 49, 0.12);
+				overflow-wrap: break-word;
 			}
 			h1 {
 				color: var(--color-secondary);
@@ -68,10 +69,17 @@ const { lang = 'lim', menu = [], languages = [], pageTitle = 'Frit-Zoervleisj Tr
 			}
 			@media (max-width: 600px) {
 				body {
-					padding: 0.5rem;
+					padding: 0.45rem;
 				}
 				main {
-					padding: 1rem;
+					border-radius: 1rem;
+					padding: 0.9rem;
+				}
+				h1 {
+					font-size: clamp(1.45rem, 7vw, 1.75rem);
+				}
+				h2 {
+					font-size: clamp(1.15rem, 5.4vw, 1.35rem);
 				}
 			}
 		</style>

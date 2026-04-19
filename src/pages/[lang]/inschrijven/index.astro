@@ -1,0 +1,129 @@
+---
+import Layout from '../../../layouts/Layout.astro';
+import { getLocaleData } from '../../../data/site-content';
+
+const { lang } = Astro.params;
+const { activeLang, locale, menu, languages } = getLocaleData(lang);
+
+const content = {
+	lim: {
+		title: 'Inschrieve',
+		intro: 'Vul hie de geveens in um uch aan te melde veur ’t treffe.',
+		name: 'Naam',
+		email: 'Email',
+		phone: 'Telefoon',
+		submit: 'Verzendje',
+	},
+	nl: {
+		title: 'Inschrijven',
+		intro: 'Vul hieronder je gegevens in om je aan te melden voor het treffen.',
+		name: 'Naam',
+		email: 'Email',
+		phone: 'Telefoon',
+		submit: 'Versturen',
+	},
+}[activeLang];
+---
+
+<Layout
+	lang={activeLang}
+	menu={menu}
+	languages={languages}
+	pageTitle={content.title}
+	navLabel={locale.ui.navLabel}
+	languageLabel={locale.ui.languageLabel}
+	brandTagline={locale.ui.brandTagline}
+>
+	<section class="signup-wrap">
+		<div class="signup-card">
+			<h1>{content.title}</h1>
+			<p>{content.intro}</p>
+
+			<form class="signup-form" method="post" action="#" onsubmit="return false;">
+				<label for="name">{content.name}</label>
+				<input id="name" name="name" type="text" autocomplete="name" required />
+
+				<label for="email">{content.email}</label>
+				<input id="email" name="email" type="email" autocomplete="email" required />
+
+				<label for="phone">{content.phone}</label>
+				<input id="phone" name="phone" type="tel" autocomplete="tel" required />
+
+				<button type="submit">{content.submit}</button>
+			</form>
+		</div>
+	</section>
+</Layout>
+
+<style>
+	.signup-wrap {
+		display: grid;
+		justify-items: center;
+	}
+
+	.signup-card {
+		width: min(100%, 680px);
+		background: linear-gradient(180deg, #fff, #fff8f1);
+		border: 1px solid rgba(159, 37, 114, 0.12);
+		border-radius: 1rem;
+		box-shadow: 0 10px 24px rgba(70, 19, 49, 0.08);
+		padding: 1.4rem;
+	}
+
+	.signup-card h1 {
+		margin: 0 0 0.5rem;
+	}
+
+	.signup-card p {
+		margin: 0 0 1rem;
+	}
+
+	.signup-form {
+		display: grid;
+		gap: 0.6rem;
+	}
+
+	.signup-form label {
+		font-weight: 700;
+		color: #4b0f34;
+	}
+
+	.signup-form input {
+		font: inherit;
+		padding: 0.65rem 0.75rem;
+		border: 1px solid rgba(159, 37, 114, 0.25);
+		border-radius: 0.6rem;
+		background: #fff;
+	}
+
+	.signup-form input:focus-visible {
+		outline: 2px solid rgba(159, 37, 114, 0.3);
+		outline-offset: 1px;
+	}
+
+	.signup-form button {
+		margin-top: 0.4rem;
+		justify-self: start;
+		border: 0;
+		border-radius: 999px;
+		padding: 0.6rem 1rem;
+		font: inherit;
+		font-weight: 800;
+		background: #9f2572;
+		color: #fff;
+		cursor: pointer;
+		transition: transform 0.15s ease, background 0.15s ease;
+	}
+
+	.signup-form button:hover,
+	.signup-form button:focus-visible {
+		background: #7f1656;
+		transform: translateY(-1px);
+	}
+
+	@media (max-width: 640px) {
+		.signup-card {
+			padding: 1rem;
+		}
+	}
+</style>

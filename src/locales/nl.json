@@ -13,7 +13,8 @@
     "home": "Thuis",
     "history": "Geschiedenis",
     "howItWorks": "Hoe het werkt",
-    "faq": "FAQ"
+    "faq": "FAQ",
+    "signup": "Inschrijven"
   },
   "pages": {
     "home": {
@@ -32,7 +33,27 @@
     },
     "history": {
       "title": "Geschiedenis",
-      "description": "Het zuurvlees treffen is al jaren een vaste plek om samen te komen, bij te praten en goed te eten. Deze editie bouwt voort op wat we eerder samen hebben neergezet."
+      "intro": "Historie van het Oape Joabiks Frit Zoervleisjtreffe",
+      "lead": "Na 2 succesvolle eerdere edities hebben we de cadans opgepakt om een 3e editie te organiseren. Om de 9 jaar is het feest in Jabeek en mogen we allemaal ons eigen Zoervleisj-recept weer verdedigen.",
+      "origin": "Begonnen als een gek idee van een paar man: iedereen uit Joabik en ver daarbuiten de kans geven om zijn eigen, beste en originele Zoervleisj-recept in goed gezelschap te eten, en door een vakjury te laten beoordelen.",
+      "chapters": [
+        {
+          "year": "2008",
+          "title": "De eerste editie",
+          "description": "In 2008 hebben we met een groep de aardappels van John Frijns samen geschild en tot friet gesneden. Een dag later werd het terrein in het jeugdhonk ingericht en gestart met voorbakken. Toen om 18.00 uur de eerste gasten arriveerden, werden de laatste frieten nog voorgebakken. Wat een werk, maar wat was het gezellig achter in het oude jeugdhonk bij de voetbalclub."
+        },
+        {
+          "year": "2017",
+          "title": "De tweede editie",
+          "description": "In 2017 werd de 2e editie op De Maar gehouden in feesttenten. Dit keer hebben we de frieten uitbesteed aan Frituur Proche, die ook de frieten van John hebben gesneden en voorgebakken. Het werd opnieuw een heel gezellige editie."
+        },
+        {
+          "year": "2026",
+          "title": "De derde editie",
+          "description": "Op vrijdag 4 september 2026 is de 3e editie van het Oape Joabiks Frit Zoervleisjtreffe. We vieren het onder de tent in de wei bij Brasserie De Maar. De frieten komen dit jaar van Sweet and Savoury, en natuurlijk kunnen we genieten van de dranken van de Brasserie en de biertjes van Brouwerij De Maar."
+        }
+      ],
+      "closing": "Het wordt sowieso een mooi weekend, want op 5 september is ook de 2e Kal en Zeng Plant Middig."
     },
     "howItWorks": {
       "title": "Hoe het werkt",

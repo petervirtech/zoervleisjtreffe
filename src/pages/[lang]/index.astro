@@ -4,6 +4,13 @@ import { getLocaleData } from '../../data/site-content';
 
 const { lang } = Astro.params;
 const { activeLang, locale, menu, languages } = getLocaleData(lang);
+const signupCtaTitle = activeLang === 'lim' ? 'Schrief uch noe in!' : 'Schrijf je nu in!';
+const signupCtaText =
+  activeLang === 'lim'
+    ? 'Wil se mitdoon? Meld uch team aan veur 20 augustus 2026 en zeen os op 4 september bie De Maar.'
+    : 'Wil je meedoen? Meld je team aan voor 20 augustus 2026 en zie ons op 4 september bij De Maar.';
+const signupCtaButton = activeLang === 'lim' ? 'Nao insjrieving en info' : 'Naar inschrijving en info';
+const signupCtaHref = `/${activeLang}/inschrijven`;
 ---
 
 <Layout
@@ -15,16 +22,113 @@ const { activeLang, locale, menu, languages } = getLocaleData(lang);
   languageLabel={locale.ui.languageLabel}
   brandTagline={locale.ui.brandTagline}
 >
-  <section>
-    <h1>{locale.pages.home.title}</h1>
-    <p>{locale.pages.home.description}</p>
-    <img src="/assets/images/flyer.jpg" alt="Flyer" style="max-width: 100%; height: auto; margin-top: 1rem;" />
-  </section>
+  <div class="home-wrap">
+    <section class="home-card hero-card">
+      <h1>{locale.pages.home.title}</h1>
+      <p>{locale.pages.home.description}</p>
 
-  {locale.pages.home.sections.map((section) => (
-    <section>
-      <h2>{section.title}</h2>
-      <p>{section.description}</p>
+      <div class="signup-cta" role="region" aria-label={signupCtaTitle}>
+        <p class="signup-cta-title">{signupCtaTitle}</p>
+        <p>{signupCtaText}</p>
+        <a class="signup-cta-button" href={signupCtaHref}>{signupCtaButton}</a>
+      </div>
+
+      <img class="hero-image" src="/assets/images/flyer.jpg" alt="Flyer" />
     </section>
-  ))}
+
+    <div class="info-stack">
+      {locale.pages.home.sections.map((section) => (
+        <section class="home-card">
+          <h2>{section.title}</h2>
+          <p>{section.description}</p>
+        </section>
+      ))}
+    </div>
+  </div>
 </Layout>
+
+<style>
+  .home-wrap {
+    display: grid;
+    gap: 1.1rem;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  .home-card {
+    background: linear-gradient(180deg, #fff, #fff8f1);
+    border: 1px solid rgba(159, 37, 114, 0.1);
+    border-radius: 1rem;
+    box-shadow: 0 10px 24px rgba(70, 19, 49, 0.08);
+    padding: 1.25rem;
+    margin: 0;
+    overflow: hidden;
+  }
+
+  .home-card h1,
+  .home-card h2 {
+    margin-top: 0;
+  }
+
+  .home-card p {
+    margin-bottom: 0;
+  }
+
+  .hero-card {
+    display: grid;
+    gap: 1rem;
+  }
+
+  .signup-cta {
+    background: linear-gradient(135deg, #fff4cc, #ffe9f8);
+    border: 1px solid rgba(159, 37, 114, 0.16);
+    border-radius: 0.9rem;
+    padding: 1rem;
+    display: grid;
+    gap: 0.65rem;
+  }
+
+  .signup-cta-title {
+    margin: 0;
+    font-weight: 800;
+    color: #7f1656;
+  }
+
+  .signup-cta-button {
+    justify-self: start;
+    text-decoration: none;
+    font-weight: 800;
+    color: #fff;
+    background: #9f2572;
+    border-radius: 999px;
+    padding: 0.6rem 1rem;
+    transition: transform 0.15s ease, background 0.15s ease;
+  }
+
+  .signup-cta-button:hover,
+  .signup-cta-button:focus-visible {
+    background: #7f1656;
+    transform: translateY(-1px);
+  }
+
+  .hero-image {
+    display: block;
+    width: 100%;
+    max-width: 100%;
+    height: auto;
+    object-fit: contain;
+    border-radius: 0.8rem;
+    border: 1px solid rgba(159, 37, 114, 0.1);
+  }
+
+  .info-stack {
+    display: grid;
+    gap: 1rem;
+  }
+
+  @media (min-width: 840px) {
+    .home-wrap {
+      gap: 1.25rem;
+    }
+  }
+</style>
