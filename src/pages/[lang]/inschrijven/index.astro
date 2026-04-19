@@ -4,6 +4,7 @@ import { getLocaleData } from '../../../data/site-content';
 
 const { lang } = Astro.params;
 const { activeLang, locale, menu, languages } = getLocaleData(lang);
+const status = Astro.url.searchParams.get('status');
 
 const content = {
 	lim: {
@@ -13,6 +14,8 @@ const content = {
 		email: 'Email',
 		phone: 'Telefoon',
 		submit: 'Verzendje',
+		success: 'Danke! Dien insjrieving is verzonje.',
+		error: 'Oei, d\'r ging get mis. Probeer \u2019t zoe metees nog \u2019ns.',
 	},
 	nl: {
 		title: 'Inschrijven',
@@ -21,6 +24,8 @@ const content = {
 		email: 'Email',
 		phone: 'Telefoon',
 		submit: 'Versturen',
+		success: 'Bedankt! Je inschrijving is verzonden.',
+		error: 'Er ging iets mis. Probeer het zo meteen opnieuw.',
 	},
 }[activeLang];
 ---
@@ -39,7 +44,13 @@ const content = {
 			<h1>{content.title}</h1>
 			<p>{content.intro}</p>
 
-			<form class="signup-form" method="post" action="#" onsubmit="return false;">
+			{status === 'ok' && <p class="form-status success">{content.success}</p>}
+			{status === 'error' && <p class="form-status error">{content.error}</p>}
+
+			<form class="signup-form" method="post" action="/api/signup">
+				<input type="hidden" name="lang" value={activeLang} />
+				<input type="text" name="website" tabindex="-1" autocomplete="off" class="hp" aria-hidden="true" />
+
 				<label for="name">{content.name}</label>
 				<input id="name" name="name" type="text" autocomplete="name" required />
 
@@ -81,6 +92,32 @@ const content = {
 	.signup-form {
 		display: grid;
 		gap: 0.6rem;
+	}
+
+	.hp {
+		position: absolute;
+		left: -9999px;
+		opacity: 0;
+		pointer-events: none;
+	}
+
+	.form-status {
+		margin: 0 0 1rem;
+		padding: 0.65rem 0.8rem;
+		border-radius: 0.65rem;
+		font-weight: 700;
+	}
+
+	.form-status.success {
+		background: #e9f8ea;
+		border: 1px solid #9ad79e;
+		color: #245a2a;
+	}
+
+	.form-status.error {
+		background: #ffecec;
+		border: 1px solid #f3a7a7;
+		color: #7a1f1f;
 	}
 
 	.signup-form label {
