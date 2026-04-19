@@ -1,10 +1,5 @@
 import type { APIRoute } from 'astro';
 
-const EMAIL_WEBHOOK_URL = import.meta.env.SIGNUP_EMAIL_WEBHOOK_URL;
-const SHEET_WEBHOOK_URL = import.meta.env.SIGNUP_SHEET_WEBHOOK_URL;
-const TEXTFILE_WEBHOOK_URL = import.meta.env.SIGNUP_TEXTFILE_WEBHOOK_URL;
-const WEBHOOK_SECRET = import.meta.env.SIGNUP_WEBHOOK_SECRET;
-
 const ALLOWED_LANGS = new Set(['lim', 'nl']);
 
 function sanitize(value: FormDataEntryValue | null) {
@@ -15,7 +10,27 @@ function getSafeLang(value: string) {
 	return ALLOWED_LANGS.has(value) ? value : 'lim';
 }
 
-async function postWebhook(url: string | undefined, payload: unknown) {
+function getEnvValue(locals: Record<string, any> | undefined, key: string) {
+	const runtimeEnv = locals?.runtime?.env as Record<string, string | undefined> | undefined;
+	const metaEnv = import.meta.env as Record<string, string | undefined>;
+	const processEnv = process.env as Record<string, string | undefined>;
+
+	return runtimeEnv?.[key] ?? metaEnv[key] ?? processEnv[key];
+}
+
+function getDebugEnvSource(locals: Record<string, any> | undefined) {
+	const runtimeEnv = locals?.runtime?.env as Record<string, string | undefined> | undefined;
+	const metaEnv = import.meta.env as Record<string, string | undefined>;
+	const processEnv = process.env as Record<string, string | undefined>;
+
+	return {
+		runtime: Boolean(runtimeEnv),
+		meta: Boolean(metaEnv),
+		process: Boolean(processEnv),
+	};
+}
+
+async function postWebhook(url: string | undefined, webhookSecret: string | undefined, payload: unknown) {
 	if (!url) {
 		return;
 	}
@@ -24,8 +39,8 @@ async function postWebhook(url: string | undefined, payload: unknown) {
 		'Content-Type': 'application/json',
 	};
 
-	if (WEBHOOK_SECRET) {
-		headers['x-signup-secret'] = WEBHOOK_SECRET;
+	if (webhookSecret) {
+		headers['x-signup-secret'] = webhookSecret;
 	}
 
 	const response = await fetch(url, {
@@ -39,20 +54,34 @@ async function postWebhook(url: string | undefined, payload: unknown) {
 	}
 }
 
-function buildWebhookPayload(basePayload: Record<string, unknown>) {
-	if (!WEBHOOK_SECRET) {
+function buildWebhookPayload(basePayload: Record<string, unknown>, webhookSecret: string | undefined) {
+	if (!webhookSecret) {
 		return basePayload;
 	}
 
 	return {
 		...basePayload,
-		'x-signup-secret': WEBHOOK_SECRET,
-		xSignupSecret: WEBHOOK_SECRET,
+		'x-signup-secret': webhookSecret,
+		xSignupSecret: webhookSecret,
 	};
 }
 
-export const POST: APIRoute = async ({ request }) => {
+export const POST: APIRoute = async ({ request, locals }) => {
 	try {
+		const emailWebhookUrl = getEnvValue(locals as Record<string, any>, 'SIGNUP_EMAIL_WEBHOOK_URL');
+		const sheetWebhookUrl = getEnvValue(locals as Record<string, any>, 'SIGNUP_SHEET_WEBHOOK_URL');
+		const textfileWebhookUrl = getEnvValue(locals as Record<string, any>, 'SIGNUP_TEXTFILE_WEBHOOK_URL');
+		const webhookSecret = getEnvValue(locals as Record<string, any>, 'SIGNUP_WEBHOOK_SECRET');
+
+		const debugSource = getDebugEnvSource(locals as Record<string, any>);
+		console.info('Signup env debug', {
+			envSource: debugSource,
+			hasEmailWebhookUrl: Boolean(emailWebhookUrl),
+			hasSheetWebhookUrl: Boolean(sheetWebhookUrl),
+			hasTextfileWebhookUrl: Boolean(textfileWebhookUrl),
+			hasWebhookSecret: Boolean(webhookSecret),
+		});
+
 		const formData = await request.formData();
 		const lang = getSafeLang(sanitize(formData.get('lang')));
 		const website = sanitize(formData.get('website'));
@@ -77,16 +106,20 @@ export const POST: APIRoute = async ({ request }) => {
 			lang,
 			timestamp: new Date().toISOString(),
 			source: 'signup-page',
-		});
+		}, webhookSecret);
 
-		if (!EMAIL_WEBHOOK_URL && !SHEET_WEBHOOK_URL && !TEXTFILE_WEBHOOK_URL) {
+		if (!emailWebhookUrl && !sheetWebhookUrl && !textfileWebhookUrl) {
+			console.error('Signup error: No signup webhooks configured', {
+				envSource: debugSource,
+				hint: 'Set SIGNUP_SHEET_WEBHOOK_URL in .env (local) or Cloudflare Pages environment variables.',
+			});
 			throw new Error('No signup webhooks configured');
 		}
 
 		await Promise.all([
-			postWebhook(EMAIL_WEBHOOK_URL, payload),
-			postWebhook(SHEET_WEBHOOK_URL, payload),
-			postWebhook(TEXTFILE_WEBHOOK_URL, payload),
+			postWebhook(emailWebhookUrl, webhookSecret, payload),
+			postWebhook(sheetWebhookUrl, webhookSecret, payload),
+			postWebhook(textfileWebhookUrl, webhookSecret, payload),
 		]);
 
 		return Response.redirect(new URL(`/${lang}/inschrijven?status=ok`, request.url), 303);

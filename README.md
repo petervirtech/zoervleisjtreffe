@@ -51,36 +51,49 @@ npm run preview
 
 The signup form can now send data to one or more webhooks on submit.
 
-Configure one or more of these server-side environment variables:
+### Environment Variables for Signups
+
+Configure one or more of these environment variables:
 
 - `SIGNUP_EMAIL_WEBHOOK_URL`: endpoint that sends you an email notification
 - `SIGNUP_SHEET_WEBHOOK_URL`: endpoint that appends rows to Google Sheets
 - `SIGNUP_TEXTFILE_WEBHOOK_URL`: endpoint that writes to a text file/log
 - `SIGNUP_WEBHOOK_SECRET`: optional shared secret sent as `x-signup-secret`
 
-If none of the webhook URLs are configured, submissions return an error state.
+If none of the webhook URLs are configured, form submissions will show an error.
 
-Recommended setup for Google Sheets + email:
+### Setting up Cloudflare Pages Secrets
 
-1. Create a Google Apps Script Web App.
-2. Use the example script in `docs/google-apps-script-signup.gs` to accept JSON POST data, append a row to your Sheet, and send an email using `MailApp.sendEmail`.
-3. Use that deployed URL as `SIGNUP_SHEET_WEBHOOK_URL` (or as both email and sheet endpoint).
+1. Go to your Cloudflare Pages project dashboard
+2. Settings > Environment variables
+3. Under **Production** environment, add:
+   - Name: `SIGNUP_SHEET_WEBHOOK_URL` | Value: your Google Apps Script Web App URL
+   - Name: `SIGNUP_WEBHOOK_SECRET` (optional) | Value: any random string
 
-### Quick Google setup (step-by-step)
+**Important:** Secrets must be added as **Production** environment variables in Cloudflare. They are accessed at runtime via `process.env`.
+
+### Setting up Google Sheets + Email Integration
 
 1. Open Google Sheets and create a new sheet for signups.
-2. In that sheet, open Extensions > Apps Script.
+2. In that sheet, open **Extensions > Apps Script**.
 3. Paste the contents of `docs/google-apps-script-signup.gs`.
-4. Set `EMAIL_TO` to your own email address.
-5. Optional: set `SHARED_SECRET` to a random string.
-6. Click Deploy > New deployment > Type: Web app.
-7. Choose Execute as: Me, Who has access: Anyone.
+4. Set `EMAIL_TO` to your email address.
+5. Optional: set `SHARED_SECRET` to a random string (same as `SIGNUP_WEBHOOK_SECRET`).
+6. Click **Deploy > New deployment > Type: Web app**.
+7. Choose **Execute as: Me**, **Who has access: Anyone**.
 8. Copy the Web app URL.
-9. In your hosting environment, set:
-	- `SIGNUP_SHEET_WEBHOOK_URL` = your Web app URL
-	- `SIGNUP_WEBHOOK_SECRET` = same value as `SHARED_SECRET` (if used)
+9. In Cloudflare Pages, set `SIGNUP_SHEET_WEBHOOK_URL` = your Web app URL.
+10. Optionally, set `SIGNUP_WEBHOOK_SECRET` = same value as `SHARED_SECRET`.
 
-Use `.env.example` as a reference for all supported variables.
+### Local Development
+
+For local testing, create a `.env` file (use `.env.example` as reference) with:
+```
+SIGNUP_SHEET_WEBHOOK_URL=https://script.google.com/macros/s/YOUR_SCRIPT_ID/userweb
+SIGNUP_WEBHOOK_SECRET=your_secret_here
+```
+
+Then run `npm run dev` and the form will use these local secrets.
 
 ## Learn More
 
