@@ -1,0 +1,87 @@
+---
+import Layout from '../../../layouts/Layout.astro';
+import { getLocaleData } from '../../../data/site-content';
+
+const { lang } = Astro.params;
+const { activeLang, locale, menu, languages } = getLocaleData(lang);
+
+const content = locale.pages.faq;
+---
+
+<Layout
+	lang={activeLang}
+	menu={menu}
+	languages={languages}
+	pageTitle={content.title}
+	navLabel={locale.ui.navLabel}
+	languageLabel={locale.ui.languageLabel}
+	brandTagline={locale.ui.brandTagline}
+>
+	<section class="faq-section">
+		<p class="eyebrow">{activeLang === 'nl' ? 'Veelgestelde vragen' : 'Veul gevraogde vraoge'}</p>
+		<h1>{content.title}</h1>
+		<p class="intro">{content.intro}</p>
+		<div class="faq-grid">
+			{content.items.map((item) => (
+				<article class="faq-card">
+					<h2>{item.question}</h2>
+					<p>{item.answer}</p>
+				</article>
+			))}
+		</div>
+	</section>
+</Layout>
+
+<style>
+	.faq-section {
+		padding: 1.5rem;
+		border: 1px solid rgba(159, 37, 114, 0.08);
+		border-radius: 1rem;
+		background: linear-gradient(180deg, #fff, #fff8f1);
+		box-shadow: 0 10px 24px rgba(70, 19, 49, 0.08);
+	}
+
+	.eyebrow {
+		margin: 0 0 0.5rem;
+		text-transform: uppercase;
+		letter-spacing: 0.12em;
+		font-size: 0.78rem;
+		font-weight: 800;
+		color: var(--color-secondary);
+	}
+
+	.intro {
+		font-size: 1.08rem;
+		font-weight: 600;
+		margin-bottom: 1.25rem;
+	}
+
+	.faq-grid {
+		display: grid;
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+		gap: 1rem;
+	}
+
+	.faq-card {
+		padding: 1rem;
+		border-radius: 0.85rem;
+		border: 1px dashed rgba(159, 37, 114, 0.24);
+		background: #fffdf9;
+	}
+
+	.faq-card h2 {
+		margin: 0 0 0.4rem;
+		font-size: 1.02rem;
+		color: var(--color-primary);
+	}
+
+	.faq-card p {
+		margin: 0;
+	}
+
+	@media (max-width: 780px) {
+		.faq-grid {
+			grid-template-columns: 1fr;
+		}
+	}
+</style>

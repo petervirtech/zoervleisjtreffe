@@ -1,0 +1,22 @@
+---
+import Layout from '../../../layouts/Layout.astro';
+import { getLocaleData } from '../../../data/site-content';
+
+const { lang } = Astro.params;
+const { activeLang, locale, menu, languages } = getLocaleData(lang);
+---
+
+<Layout
+	lang={activeLang}
+	menu={menu}
+	languages={languages}
+	pageTitle={locale.pages.history.title}
+	navLabel={locale.ui.navLabel}
+	languageLabel={locale.ui.languageLabel}
+	brandTagline={locale.ui.brandTagline}
+>
+	<section>
+		<h1>{locale.pages.history.title}</h1>
+		<p>{locale.pages.history.description}</p>
+	</section>
+</Layout>

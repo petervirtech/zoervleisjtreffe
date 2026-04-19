@@ -1,0 +1,207 @@
+---
+import Layout from '../../../layouts/Layout.astro';
+import { getLocaleData } from '../../../data/site-content';
+
+const { lang } = Astro.params;
+const { activeLang, locale, menu, languages } = getLocaleData(lang);
+
+const content = locale.pages.howItWorks;
+---
+
+<Layout
+	lang={activeLang}
+	menu={menu}
+	languages={languages}
+	pageTitle={content.title}
+	navLabel={locale.ui.navLabel}
+	languageLabel={locale.ui.languageLabel}
+	brandTagline={locale.ui.brandTagline}
+>
+	<section class="hero">
+		<div class="hero-copy">
+			<p class="eyebrow">{activeLang === 'nl' ? 'Praktische uitleg' : 'Praktiese uitleg'}</p>
+			<h1>{content.title}</h1>
+			<p class="lead">{content.intro}</p>
+			<p>{content.overview}</p>
+		</div>
+		<div class="hero-panel">
+			<div class="panel-marker">{activeLang === 'nl' ? 'Later beeld' : 'Later beeld'} 01</div>
+			<p>{content.imagePlaceholders[0].hint}</p>
+		</div>
+	</section>
+
+	<section class="steps-grid">
+		{content.steps.map((step) => (
+			<article class="step-card">
+				<h2>{step.title}</h2>
+				<p>{step.description}</p>
+			</article>
+		))}
+	</section>
+
+	<section class="image-grid">
+		{content.imagePlaceholders.map((placeholder, index) => (
+			<figure class="image-placeholder">
+				<div class="placeholder-badge">{activeLang === 'nl' ? 'Afbeelding' : 'Aafbeelding'} {index + 1}</div>
+				<div class="placeholder-box">
+					<strong>{placeholder.label}</strong>
+					<span>{placeholder.hint}</span>
+				</div>
+			</figure>
+		))}
+	</section>
+
+	<section class="jury-section">
+		<div>
+			<p class="eyebrow">{activeLang === 'nl' ? 'Vakjury' : 'Vakjuri'}</p>
+			<h2>{content.jury.title}</h2>
+			<p>{content.jury.description}</p>
+		</div>
+	</section>
+
+</Layout>
+
+<style>
+	.hero {
+		display: grid;
+		grid-template-columns: minmax(0, 1.4fr) minmax(280px, 0.9fr);
+		gap: 1.5rem;
+		align-items: stretch;
+	}
+
+	.hero-copy,
+	.hero-panel,
+	.step-card,
+	.image-placeholder,
+	.jury-section {
+		border-radius: 1rem;
+		background: linear-gradient(180deg, #fff, #fff8f1);
+		box-shadow: 0 10px 24px rgba(70, 19, 49, 0.08);
+	}
+
+	.hero-copy {
+		padding: 1.5rem;
+	}
+
+	.hero-copy h1 {
+		margin-bottom: 0.75rem;
+	}
+
+	.hero-copy p {
+		margin: 0;
+	}
+
+	.hero-copy p + p {
+		margin-top: 0.75rem;
+	}
+
+	.hero-panel {
+		padding: 1.25rem;
+		border: 1px dashed rgba(159, 37, 114, 0.28);
+		display: flex;
+		flex-direction: column;
+		justify-content: flex-end;
+		min-height: 220px;
+		background:
+			radial-gradient(circle at top right, rgba(254, 153, 0, 0.18), transparent 45%),
+			linear-gradient(180deg, #fff, #fff5ea);
+	}
+
+	.eyebrow {
+		margin: 0 0 0.5rem;
+		text-transform: uppercase;
+		letter-spacing: 0.12em;
+		font-size: 0.78rem;
+		font-weight: 800;
+		color: var(--color-secondary);
+	}
+
+	.lead {
+		font-size: 1.08rem;
+		font-weight: 600;
+		color: rgba(110, 18, 77, 0.92);
+	}
+
+	.panel-marker,
+	.placeholder-badge {
+		display: inline-flex;
+		align-self: flex-start;
+		padding: 0.35rem 0.7rem;
+		border-radius: 999px;
+		background: rgba(159, 37, 114, 0.1);
+		color: var(--color-primary);
+		font-size: 0.8rem;
+		font-weight: 800;
+	}
+
+	.steps-grid {
+		display: grid;
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+		gap: 1rem;
+		margin-top: 1.5rem;
+	}
+
+	.step-card {
+		padding: 1.25rem;
+		border: 1px solid rgba(159, 37, 114, 0.08);
+	}
+
+	.step-card h2,
+	.jury-section h2 {
+		margin-top: 0;
+		margin-bottom: 0.5rem;
+	}
+
+	.step-card p {
+		margin: 0;
+	}
+
+	.image-grid {
+		display: grid;
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+		gap: 1rem;
+		margin-top: 1.5rem;
+	}
+
+	.image-placeholder {
+		overflow: hidden;
+	}
+
+	.placeholder-box {
+		min-height: 180px;
+		padding: 1.25rem;
+		display: grid;
+		align-content: center;
+		gap: 0.5rem;
+		border: 1px dashed rgba(159, 37, 114, 0.25);
+		background:
+			linear-gradient(135deg, rgba(159, 37, 114, 0.06), rgba(254, 153, 0, 0.08));
+	}
+
+	.placeholder-box strong {
+		font-size: 1rem;
+	}
+
+	.placeholder-box span {
+		color: rgba(159, 37, 114, 0.86);
+		line-height: 1.5;
+	}
+
+	.jury-section {
+		margin-top: 1.5rem;
+		padding: 1.5rem;
+		border: 1px solid rgba(159, 37, 114, 0.08);
+	}
+
+	.jury-section p {
+		margin: 0;
+	}
+
+	@media (max-width: 780px) {
+		.hero,
+		.steps-grid,
+		.image-grid {
+			grid-template-columns: 1fr;
+		}
+	}
+</style>

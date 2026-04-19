@@ -1,4 +1,97 @@
 {
-  "welcome": "3e Open Jabeeks Friet-Zuurvlees Treffen!",
-  "description": "Save the date, op vrijdag 4 september 2026 organiseren wij alweer het 3e open jabeeks zuurvleestreffen. blokker deze datum alvast in je agenda.Het zal plaats vinden bij brasserie de Maar Hou onze website en socials in de gaten voor updates."
+  "pageTitle": "3e Open Jabeeks Friet-Zuurvlees Treffen",
+  "ui": {
+    "navLabel": "Hoofdmenu",
+    "languageLabel": "Taal",
+    "brandTagline": "Open Jabeeks zuurvlees treffen",
+    "languages": {
+      "lim": "Limburgs",
+      "nl": "Nederlands"
+    }
+  },
+  "nav": {
+    "home": "Thuis",
+    "history": "Geschiedenis",
+    "howItWorks": "Hoe het werkt",
+    "faq": "FAQ"
+  },
+  "pages": {
+    "home": {
+      "title": "3e Open Jabeeks Friet-Zuurvlees Treffen!",
+      "description": "Save the date: op vrijdag 4 september 2026 organiseren wij alweer het 3e open Jabeeks zuurvleestreffen. Zet deze datum alvast in je agenda. Het vindt plaats bij brasserie De Maar. Houd onze website en socials in de gaten voor updates!",
+      "sections": [
+        {
+          "title": "Geschiedenis",
+          "description": "Het zuurvlees treffen is al jaren een vaste plek om samen te komen, bij te praten en goed te eten. Deze editie bouwt voort op wat we eerder samen hebben neergezet."
+        },
+        {
+          "title": "Hoe het werkt",
+          "description": "Houd de datum vrij, kom langs bij brasserie De Maar en volg de website voor nieuws. Meer praktische informatie verschijnt later online, samen met updates over het programma."
+        }
+      ]
+    },
+    "history": {
+      "title": "Geschiedenis",
+      "description": "Het zuurvlees treffen is al jaren een vaste plek om samen te komen, bij te praten en goed te eten. Deze editie bouwt voort op wat we eerder samen hebben neergezet."
+    },
+    "howItWorks": {
+      "title": "Hoe het werkt",
+      "intro": "Je maakt je eigen Zoervleisj, voldoende voor jezelf en je gasten, met daarnaast een kleine portie voor de jury. Daarna eet je je zelfgemaakte Zoervleisj samen met vrienden en familie.",
+      "overview": "Hieronder staat in het kort hoe de inschrijving, bereiding en beoordeling werkt. Gebruik de blokken als richtlijn voor je eigen voorbereiding.",
+      "steps": [
+        {
+          "title": "Inschrijven",
+          "description": "Jullie schrijven je in met alle mede-Zoervleisjeters. Inschrijfgeld en formulier lever je samen in bij de organisatie, vóór 20 augustus 2026."
+        },
+        {
+          "title": "Koken",
+          "description": "Jullie maken je eigen Zoervleisj in een geschikte pan. Opwarmen kan op een elektrisch kooktoestel. Wij zorgen voor de frietjes, mayonaise en appelmoes."
+        },
+        {
+          "title": "Samen eten",
+          "description": "Na het koken eten jullie de zelfgemaakte Zoervleisj samen met vrienden en familie aan tafel."
+        },
+        {
+          "title": "Beoordeling",
+          "description": "Een klein deel van jullie Zoervleisj gaat naar de vakjury, met een Vakslager, Notabele en Bon Vivant. Zij beoordelen het gerecht en interviewen de top 10 over hun receptideeën."
+        }
+      ],
+      "jury": {
+        "title": "De vakjury",
+        "description": "Uit de beoordeling komt een top 3 en ook een poedelprijs. De jury let op smaak, verhaal, samenhang en de eigen twist van jullie recept. De uitslag van de jury is bindend. Over de uitslag wordt niet gecorrespondeerd."
+      },
+      "imagePlaceholders": [
+        {
+          "label": "Foto van de bereiding",
+          "hint": "Plaats hier later een foto van de stoofpot of het voorbereiden van de ingrediënten."
+        },
+        {
+          "label": "Foto van het serveren",
+          "hint": "Plaats hier later een sfeerfoto van het bord, de frietjes en de tafel."
+        }
+      ]
+    },
+    "faq": {
+      "title": "FAQ",
+      "intro": "Veelgestelde vragen over deelname, inschrijving en wat er wel of niet in de pan mag.",
+      "items": [
+        {
+          "question": "Mag ik ook alleen bier komen drinken?",
+          "answer": "Nee, alleen toegang als je Zoervleisj komt eten."
+        },
+        {
+          "question": "Ik kan zelf geen Zoervleisj maken?",
+          "answer": "Pech, maar schrijf je in samen met iemand die dat wel goed kan. Dan mag je komen."
+        },
+        {
+          "question": "Mag mijn oma het Zoervleisj maken?",
+          "answer": "Zeker, maar zeg dat niet tegen de jury."
+        },
+        {
+          "question": "Mag ik Zoervleisj van de Sligro aanbieden?",
+          "answer": "Wat denk je zelf...."
+        }
+      ]
+    }
+  }
 }
