@@ -11,7 +11,7 @@ const locales: Record<Lang, LocaleData> = {
 };
 
 export function resolveLang(lang: string | undefined): Lang {
-	return lang === 'nl' ? 'nl' : 'lim';
+	return lang === 'lim' ? 'lim' : 'nl';
 }
 
 export function getLocaleData(lang: string | undefined) {
