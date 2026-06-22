@@ -91,7 +91,6 @@ export const POST: APIRoute = async ({ request, locals }) => {
 			return Response.redirect(new URL(`/${lang}/inschrijven?status=ok`, request.url), 303);
 		}
 
-		const name = sanitize(formData.get('name'));
 		const firstName = sanitize(formData.get('firstName'));
 		const lastName = sanitize(formData.get('lastName'));
 		const address = sanitize(formData.get('address'));
@@ -103,12 +102,11 @@ export const POST: APIRoute = async ({ request, locals }) => {
 		const personCount = Number.parseInt(personCountRaw, 10);
 		const registrationFee = Number.isFinite(personCount) && personCount > 0 ? personCount * 10 : NaN;
 
-		if (!name || !firstName || !lastName || !address || !postalCode || !city || !email || !phone || !Number.isFinite(personCount) || personCount < 1) {
+		if (!firstName || !lastName || !address || !postalCode || !city || !email || !phone || !Number.isFinite(personCount) || personCount < 1) {
 			return Response.redirect(new URL(`/${lang}/inschrijven?status=error`, request.url), 303);
 		}
 
 		const payload = buildWebhookPayload({
-			name,
 			firstName,
 			lastName,
 			address,

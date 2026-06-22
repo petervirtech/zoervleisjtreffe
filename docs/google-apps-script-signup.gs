@@ -14,7 +14,6 @@ function doPost(e) {
     }
 
     const payload = JSON.parse(e.postData.contents || '{}');
-    const name = (payload.name || '').trim();
     const firstName = (payload.firstName || '').trim();
     const lastName = (payload.lastName || '').trim();
     const address = (payload.address || '').trim();
@@ -26,21 +25,22 @@ function doPost(e) {
     const registrationFee = Number(payload.registrationFee || 0);
     const lang = (payload.lang || 'lim').trim();
     const timestamp = payload.timestamp || new Date().toISOString();
+    const phoneTelLink = phone ? `tel:${phone.replace(/\s+/g, '')}` : '';
 
-    if (!name || !firstName || !lastName || !address || !postalCode || !city || !email || !phone || !personCount) {
+    if (!firstName || !lastName || !address || !postalCode || !city || !email || !phone || !personCount) {
       return jsonResponse_({ ok: false, error: 'missing-fields' }, 400);
     }
 
     const sheet = getOrCreateSheet_(SHEET_NAME);
     sheet.appendRow([
       timestamp,
-      name,
       firstName,
       lastName,
       address,
       postalCode,
       city,
       phone,
+      phoneTelLink,
       email,
       personCount,
       registrationFee,
@@ -48,11 +48,13 @@ function doPost(e) {
       'website',
     ]);
 
+    const row = sheet.getLastRow();
+    sheet.getRange(row, 7).setNumberFormat('@');
+
     const subject = 'Nieuwe inschrijving Zoervleisjtreffe';
     const body = [
       'Er is een nieuwe inschrijving binnengekomen:',
       '',
-      'Naam: ' + name,
       'Voornaam: ' + firstName,
       'Achternaam: ' + lastName,
       'Adres: ' + address,
@@ -60,6 +62,7 @@ function doPost(e) {
       'Woonplaats: ' + city,
       'Email: ' + email,
       'Telefoonnummer: ' + phone,
+      'Bel-link: ' + phoneTelLink,
       'Aantal personen: ' + personCount,
       'Inschrijfgeld: ' + registrationFee,
       'Taal: ' + lang,
@@ -80,7 +83,7 @@ function getOrCreateSheet_(sheetName) {
 
   if (!sheet) {
     sheet = ss.insertSheet(sheetName);
-    sheet.appendRow(['timestamp', 'name', 'firstName', 'lastName', 'address', 'postalCode', 'city', 'phone', 'email', 'personCount', 'registrationFee', 'lang', 'source']);
+    sheet.appendRow(['timestamp', 'firstName', 'lastName', 'address', 'postalCode', 'city', 'phone', 'phoneTelLink', 'email', 'personCount', 'registrationFee', 'lang', 'source']);
   }
 
   return sheet;

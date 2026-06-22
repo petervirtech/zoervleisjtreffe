@@ -10,7 +10,6 @@ const content = {
 	lim: {
 		title: 'Inschrieve',
 		intro: 'Vul hie de geveens in um uch aan te melde veur ’t treffe.',
-		name: 'Naam',
 		firstName: 'Voornaam',
 		lastName: 'Achternaam',
 		address: 'Adres',
@@ -24,21 +23,20 @@ const content = {
 		waiting: 'Ee moment estebleef...',
 		success: 'Danke! Dien insjrieving is verzonje.',
 		error: 'Oei, d\'r ging get mis. Probeer \u2019t zoe metees nog \u2019ns.',
-		rulesTitle: 'Spelrege',
+		rulesTitle: 'Spelregele',
 		rules: [
 			'Bereid de lekkerste Limburgse zoervleisj volges dien eige recept en neem dat mit nao ’t treffe.',
-			'Dich meugst dien zoervleisj samen mit dien gäste ope. De organisatie zorgt veur friete, appelmoos en mayo.',
-			'Zorg veur genog zoervleisj veur dichzelf, dien gäste en eine kleene portie veur de jury.',
-			'Hèt zoervleisj mag opgewermd waere op e elektrisch kookstel; zorg veur e geschikt pannetje.',
-			'Eine vakjury zal de inzending beoordele.',
-			'De usslag van de jury is bindend. "Neet zeivere."',
-			'Uiterste aanmelddatum: 16-08-2026 of bie eine maksimaal 150 deelnemers.',
+			'Dich meugst dien zoervleisj same mit dien gäste ope. De organisatie zörgt veur friete, appelmoes en mayo.',
+			'Zorg veur genog zoervleisj veur dichzelf, dien gäste en eine kleine portie veur de jury.',
+			'Hèt zoervleisj mag opgewermd waere op ein elektrisch kookstel; zorg veur ein geschikt pannetje.',
+			'Ein vakjury zal de inzending beoordele.',
+			'De uslag van de jury is bindend. "Neet zeivere."',
+			'Uiterste aanmelddatum: 16-08-2026 of bie eine maksimaal aantal van 150 deelnemers.',
 		],
 	},
 	nl: {
 		title: 'Inschrijven',
 		intro: 'Vul hieronder je gegevens in om je aan te melden voor het treffen.',
-		name: 'Naam',
 		firstName: 'Voornaam',
 		lastName: 'Achternaam',
 		address: 'Adres',
@@ -86,9 +84,6 @@ const content = {
 			<form class="signup-form" method="post" action="/api/signup">
 				<input type="hidden" name="lang" value={activeLang} />
 				<input type="text" name="website" tabindex="-1" autocomplete="off" class="hp" aria-hidden="true" />
-
-				<label for="name">{content.name}</label>
-				<input id="name" name="name" type="text" autocomplete="name" required />
 
 				<label for="first-name">{content.firstName}</label>
 				<input id="first-name" name="firstName" type="text" autocomplete="given-name" required />
