@@ -9,7 +9,7 @@ const signupCtaText =
   activeLang === 'lim'
     ? 'Wil se mitdoon? Meld uch team aan veur 20 augustus 2026 en zeen os op 4 september bie De Maar.'
     : 'Wil je meedoen? Meld je team aan voor 20 augustus 2026 en zie ons op 4 september bij De Maar.';
-const signupCtaButton = 'Binnenkort beschikbaar';
+const signupCtaButton = activeLang === 'lim' ? 'Naar inschrieve' : 'Naar inschrijven';
 ---
 
 <Layout
@@ -29,7 +29,7 @@ const signupCtaButton = 'Binnenkort beschikbaar';
       <div class="signup-cta" role="region" aria-label={signupCtaTitle}>
         <p class="signup-cta-title">{signupCtaTitle}</p>
         <p>{signupCtaText}</p>
-        <button type="button" class="signup-cta-button" disabled aria-disabled="true">{signupCtaButton}</button>
+        <a class="signup-cta-button" href={`/${activeLang}/inschrijven`}>{signupCtaButton}</a>
       </div>
 
       <img class="hero-image" src="/assets/images/flyer.jpg" alt="Flyer" />
@@ -95,14 +95,23 @@ const signupCtaButton = 'Binnenkort beschikbaar';
 
   .signup-cta-button {
     justify-self: start;
+    display: inline-flex;
+    align-items: center;
+    text-decoration: none;
     font-weight: 800;
     color: #fff;
     background: #9f2572;
     border: 0;
     border-radius: 999px;
     padding: 0.6rem 1rem;
-    opacity: 0.7;
-    cursor: not-allowed;
+    cursor: pointer;
+    transition: transform 0.15s ease, background 0.15s ease;
+  }
+
+  .signup-cta-button:hover,
+  .signup-cta-button:focus-visible {
+    background: #7f1656;
+    transform: translateY(-1px);
   }
 
   .hero-image {

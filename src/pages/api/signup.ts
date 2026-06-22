@@ -92,17 +92,32 @@ export const POST: APIRoute = async ({ request, locals }) => {
 		}
 
 		const name = sanitize(formData.get('name'));
+		const firstName = sanitize(formData.get('firstName'));
+		const lastName = sanitize(formData.get('lastName'));
+		const address = sanitize(formData.get('address'));
+		const postalCode = sanitize(formData.get('postalCode'));
+		const city = sanitize(formData.get('city'));
 		const email = sanitize(formData.get('email'));
 		const phone = sanitize(formData.get('phone'));
+		const personCountRaw = sanitize(formData.get('personCount'));
+		const personCount = Number.parseInt(personCountRaw, 10);
+		const registrationFee = Number.isFinite(personCount) && personCount > 0 ? personCount * 10 : NaN;
 
-		if (!name || !email || !phone) {
+		if (!name || !firstName || !lastName || !address || !postalCode || !city || !email || !phone || !Number.isFinite(personCount) || personCount < 1) {
 			return Response.redirect(new URL(`/${lang}/inschrijven?status=error`, request.url), 303);
 		}
 
 		const payload = buildWebhookPayload({
 			name,
+			firstName,
+			lastName,
+			address,
+			postalCode,
+			city,
 			email,
 			phone,
+			personCount,
+			registrationFee,
 			lang,
 			timestamp: new Date().toISOString(),
 			source: 'signup-page',

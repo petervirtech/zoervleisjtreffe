@@ -11,23 +11,57 @@ const content = {
 		title: 'Inschrieve',
 		intro: 'Vul hie de geveens in um uch aan te melde veur ’t treffe.',
 		name: 'Naam',
+		firstName: 'Voornaam',
+		lastName: 'Achternaam',
+		address: 'Adres',
+		postalCode: 'Postcode',
+		city: 'Woonplaats',
+		phone: 'Telefoonnummer (voor WhatsApp en Tikkie)',
 		email: 'Email',
-		phone: 'Telefoon',
+		personCount: 'Aantal personen',
+		registrationFee: 'Inschrijfgeld',
 		submit: 'Verzendje',
 		waiting: 'Ee moment estebleef...',
 		success: 'Danke! Dien insjrieving is verzonje.',
 		error: 'Oei, d\'r ging get mis. Probeer \u2019t zoe metees nog \u2019ns.',
+		rulesTitle: 'Spelrege',
+		rules: [
+			'Bereid de lekkerste Limburgse zoervleisj volges dien eige recept en neem dat mit nao ’t treffe.',
+			'Dich meugst dien zoervleisj samen mit dien gäste ope. De organisatie zorgt veur friete, appelmoos en mayo.',
+			'Zorg veur genog zoervleisj veur dichzelf, dien gäste en eine kleene portie veur de jury.',
+			'Hèt zoervleisj mag opgewermd waere op e elektrisch kookstel; zorg veur e geschikt pannetje.',
+			'Eine vakjury zal de inzending beoordele.',
+			'De usslag van de jury is bindend. "Neet zeivere."',
+			'Uiterste aanmelddatum: 16-08-2026 of bie eine maksimaal 150 deelnemers.',
+		],
 	},
 	nl: {
 		title: 'Inschrijven',
 		intro: 'Vul hieronder je gegevens in om je aan te melden voor het treffen.',
 		name: 'Naam',
+		firstName: 'Voornaam',
+		lastName: 'Achternaam',
+		address: 'Adres',
+		postalCode: 'Postcode',
+		city: 'Woonplaats',
+		phone: 'Telefoonnummer (voor WhatsApp en Tikkie)',
 		email: 'Email',
-		phone: 'Telefoon',
+		personCount: 'Aantal personen',
+		registrationFee: 'Inschrijfgeld',
 		submit: 'Versturen',
 		waiting: 'Een moment alstublieft...',
 		success: 'Bedankt! Je inschrijving is verzonden.',
 		error: 'Er ging iets mis. Probeer het zo meteen opnieuw.',
+		rulesTitle: 'Spelregels',
+		rules: [
+			'Bereid het lekkerste Limburgs zoervleisj volgens jouw unieke recept en neem dit mee naar het treffen.',
+			'Je mag je zoervleisj samen met je gasten opeten. De organisatie zorgt voor frieten, appelmoos en mayo.',
+			'Zorg voor voldoende zoervleisj voor jezelf, je gasten en een kleine portie voor de jury.',
+			'Het zoervleisj kan opgewarmd worden op een elektrisch kookstel, zorg voor een geschikt pannetje.',
+			'Een vakjury zal de inzending beoordelen.',
+			'De uitslag van de jury is bindend. "Neet zeivere."',
+			'Uiterste aanmelddatum: 16-08-2026 of bij een maximaal aantal van 150 deelnemers.',
+		],
 	},
 }[activeLang];
 ---
@@ -56,11 +90,33 @@ const content = {
 				<label for="name">{content.name}</label>
 				<input id="name" name="name" type="text" autocomplete="name" required />
 
+				<label for="first-name">{content.firstName}</label>
+				<input id="first-name" name="firstName" type="text" autocomplete="given-name" required />
+
+				<label for="last-name">{content.lastName}</label>
+				<input id="last-name" name="lastName" type="text" autocomplete="family-name" required />
+
+				<label for="address">{content.address}</label>
+				<input id="address" name="address" type="text" autocomplete="street-address" required />
+
+				<label for="postal-code">{content.postalCode}</label>
+				<input id="postal-code" name="postalCode" type="text" autocomplete="postal-code" required />
+
+				<label for="city">{content.city}</label>
+				<input id="city" name="city" type="text" autocomplete="address-level2" required />
+
 				<label for="email">{content.email}</label>
 				<input id="email" name="email" type="email" autocomplete="email" required />
 
 				<label for="phone">{content.phone}</label>
 				<input id="phone" name="phone" type="tel" autocomplete="tel" required />
+
+				<label for="person-count">{content.personCount}</label>
+				<input id="person-count" name="personCount" type="number" min="1" step="1" inputmode="numeric" required />
+
+				<label for="registration-fee">{content.registrationFee}</label>
+				<input id="registration-fee" name="registrationFeeDisplay" type="text" readonly aria-readonly="true" />
+				<input type="hidden" name="registrationFee" value="0" />
 
 				<button type="submit" class="submit-btn">{content.submit}</button>
 				<div class="loading-overlay" aria-live="polite">
@@ -68,6 +124,13 @@ const content = {
 					<p>{content.waiting}</p>
 				</div>
 			</form>
+
+			<section class="rules-card" aria-labelledby="rules-title">
+				<h2 id="rules-title">{content.rulesTitle}</h2>
+				<ul>
+					{content.rules.map((rule) => <li>{rule}</li>)}
+				</ul>
+			</section>
 		</div>
 	</section>
 </Layout>
@@ -76,12 +139,33 @@ const content = {
 	const form = document.querySelector('.signup-form') as HTMLFormElement | null;
 	const submitBtn = document.querySelector('.submit-btn') as HTMLButtonElement | null;
 	const loadingOverlay = document.querySelector('.loading-overlay') as HTMLDivElement | null;
+	const personCountInput = document.querySelector('#person-count') as HTMLInputElement | null;
+	const registrationFeeDisplay = document.querySelector('#registration-fee') as HTMLInputElement | null;
+	const registrationFeeInput = document.querySelector('input[name="registrationFee"]') as HTMLInputElement | null;
+
+	const updateRegistrationFee = () => {
+		if (!personCountInput || !registrationFeeDisplay || !registrationFeeInput) {
+			return;
+		}
+
+		const parsedCount = Number.parseInt(personCountInput.value, 10);
+		const personCount = Number.isFinite(parsedCount) && parsedCount > 0 ? parsedCount : 0;
+		const fee = personCount * 10;
+
+		registrationFeeDisplay.value = personCount > 0 ? `€ ${fee}` : '';
+		registrationFeeInput.value = String(fee);
+	};
 
 	if (form && submitBtn && loadingOverlay) {
 		form.addEventListener('submit', () => {
 			submitBtn.disabled = true;
 			loadingOverlay.classList.add('visible');
 		});
+	}
+
+	if (personCountInput) {
+		personCountInput.addEventListener('input', updateRegistrationFee);
+		updateRegistrationFee();
 	}
 </script>
 
@@ -221,6 +305,31 @@ const content = {
 		color: #4b0f34;
 		text-align: center;
 		font-size: 0.95rem;
+	}
+
+	.rules-card {
+		margin-top: 1.2rem;
+		padding: 1rem 1rem 0.9rem;
+		border-radius: 0.9rem;
+		background: linear-gradient(135deg, #fff7ea, #fff1f8);
+		border: 1px solid rgba(159, 37, 114, 0.14);
+	}
+
+	.rules-card h2 {
+		margin: 0 0 0.65rem;
+		font-size: 1.1rem;
+		color: #4b0f34;
+	}
+
+	.rules-card ul {
+		margin: 0;
+		padding-left: 1.2rem;
+		display: grid;
+		gap: 0.5rem;
+	}
+
+	.rules-card li {
+		line-height: 1.5;
 	}
 
 	.spinner {

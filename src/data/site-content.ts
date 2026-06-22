@@ -23,7 +23,7 @@ export function getLocaleData(lang: string | undefined) {
 		{ href: `/${activeLang}/geschiedenis`, label: locale.nav.history },
 		{ href: `/${activeLang}/hoe-het-werkt`, label: locale.nav.howItWorks },
 		{ href: `/${activeLang}/faq`, label: locale.nav.faq },
-		//{ href: `/${activeLang}/inschrijven`, label: locale.nav.signup },
+		{ href: `/${activeLang}/inschrijven`, label: locale.nav.signup },
 	];
 
 	const languages = [

@@ -15,25 +15,53 @@ function doPost(e) {
 
     const payload = JSON.parse(e.postData.contents || '{}');
     const name = (payload.name || '').trim();
+    const firstName = (payload.firstName || '').trim();
+    const lastName = (payload.lastName || '').trim();
+    const address = (payload.address || '').trim();
+    const postalCode = (payload.postalCode || '').trim();
+    const city = (payload.city || '').trim();
     const email = (payload.email || '').trim();
     const phone = (payload.phone || '').trim();
+    const personCount = Number(payload.personCount || 0);
+    const registrationFee = Number(payload.registrationFee || 0);
     const lang = (payload.lang || 'lim').trim();
     const timestamp = payload.timestamp || new Date().toISOString();
 
-    if (!name || !email || !phone) {
+    if (!name || !firstName || !lastName || !address || !postalCode || !city || !email || !phone || !personCount) {
       return jsonResponse_({ ok: false, error: 'missing-fields' }, 400);
     }
 
     const sheet = getOrCreateSheet_(SHEET_NAME);
-    sheet.appendRow([timestamp, name, email, phone, lang, 'website']);
+    sheet.appendRow([
+      timestamp,
+      name,
+      firstName,
+      lastName,
+      address,
+      postalCode,
+      city,
+      phone,
+      email,
+      personCount,
+      registrationFee,
+      lang,
+      'website',
+    ]);
 
     const subject = 'Nieuwe inschrijving Zoervleisjtreffe';
     const body = [
       'Er is een nieuwe inschrijving binnengekomen:',
       '',
       'Naam: ' + name,
+      'Voornaam: ' + firstName,
+      'Achternaam: ' + lastName,
+      'Adres: ' + address,
+      'Postcode: ' + postalCode,
+      'Woonplaats: ' + city,
       'Email: ' + email,
-      'Telefoon: ' + phone,
+      'Telefoonnummer: ' + phone,
+      'Aantal personen: ' + personCount,
+      'Inschrijfgeld: ' + registrationFee,
       'Taal: ' + lang,
       'Tijdstip: ' + timestamp,
     ].join('\n');
@@ -52,7 +80,7 @@ function getOrCreateSheet_(sheetName) {
 
   if (!sheet) {
     sheet = ss.insertSheet(sheetName);
-    sheet.appendRow(['timestamp', 'name', 'email', 'phone', 'lang', 'source']);
+    sheet.appendRow(['timestamp', 'name', 'firstName', 'lastName', 'address', 'postalCode', 'city', 'phone', 'email', 'personCount', 'registrationFee', 'lang', 'source']);
   }
 
   return sheet;
