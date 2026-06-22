@@ -153,10 +153,13 @@ const content = {
 
 		const parsedCount = Number.parseInt(personCountInput.value, 10);
 		const personCount = Number.isFinite(parsedCount) && parsedCount > 0 ? parsedCount : 0;
-		const fee = personCount * 10;
+		const pricePerPerson = 6.9; // EUR per deelnemer
+		const fee = Math.round(personCount * pricePerPerson * 100) / 100;
 
-		registrationFeeDisplay.value = personCount > 0 ? `€ ${fee}` : '';
-		registrationFeeInput.value = String(fee);
+		// Display with comma as decimal separator for NL/LI locales
+		registrationFeeDisplay.value = personCount > 0 ? `€ ${fee.toFixed(2).replace('.', ',')}` : '';
+		// Hidden input uses dot as decimal separator (machine-readable)
+		registrationFeeInput.value = fee.toFixed(2);
 	};
 
 	if (form && submitBtn && loadingOverlay) {

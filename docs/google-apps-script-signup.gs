@@ -22,7 +22,9 @@ function doPost(e) {
     const email = (payload.email || '').trim();
     const phone = (payload.phone || '').trim();
     const personCount = Number(payload.personCount || 0);
-    const registrationFee = Number(payload.registrationFee || 0);
+    var registrationFee = Number(payload.registrationFee || 0);
+    // Normalize to two decimals
+    registrationFee = Math.round(registrationFee * 100) / 100;
     const lang = (payload.lang || 'lim').trim();
     const timestamp = payload.timestamp || new Date().toISOString();
     const phoneTelLink = phone ? `tel:${phone.replace(/\s+/g, '')}` : '';
@@ -64,7 +66,7 @@ function doPost(e) {
       'Telefoonnummer: ' + phone,
       'Bel-link: ' + phoneTelLink,
       'Aantal personen: ' + personCount,
-      'Inschrijfgeld: ' + registrationFee,
+      'Inschrijfgeld: ' + (registrationFee.toFixed ? registrationFee.toFixed(2).replace('.', ',') : registrationFee),
       'Taal: ' + lang,
       'Tijdstip: ' + timestamp,
     ].join('\n');

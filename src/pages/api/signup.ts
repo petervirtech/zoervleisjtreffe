@@ -100,7 +100,8 @@ export const POST: APIRoute = async ({ request, locals }) => {
 		const phone = sanitize(formData.get('phone'));
 		const personCountRaw = sanitize(formData.get('personCount'));
 		const personCount = Number.parseInt(personCountRaw, 10);
-		const registrationFee = Number.isFinite(personCount) && personCount > 0 ? personCount * 10 : NaN;
+		const pricePerPerson = 6.9;
+		const registrationFee = Number.isFinite(personCount) && personCount > 0 ? Math.round(personCount * pricePerPerson * 100) / 100 : NaN;
 
 		if (!firstName || !lastName || !address || !postalCode || !city || !email || !phone || !Number.isFinite(personCount) || personCount < 1) {
 			return Response.redirect(new URL(`/${lang}/inschrijven?status=error`, request.url), 303);
