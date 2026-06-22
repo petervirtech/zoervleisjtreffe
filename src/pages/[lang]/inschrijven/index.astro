@@ -9,6 +9,7 @@ const status = Astro.url.searchParams.get('status');
 const content = {
 	lim: {
 		title: 'Inschrieve',
+		pricePerPerson: 'Kost per persoon: € 6,90',
 		eventTitle: '3e oape Joabiks Zoerveisjtreff',
 		eventMeta: 'Datum: 4 september 2026, begin um 18:00 bie Brasserie De Maar in de wei.',
 		intro: 'Vul hie de geveens in um uch aan te melde veur ’t treffe.',
@@ -38,6 +39,7 @@ const content = {
 	},
 	nl: {
 		title: 'Inschrijven',
+		pricePerPerson: 'Prijs per persoon: € 6,90',
 		eventTitle: '3e oape Joabiks Zoerveisjtreff',
 		eventMeta: 'Datum: 4 september 2026, start om 18:00 bij Brasserie De Maar in de wei.',
 		intro: 'Vul hieronder je gegevens in om je aan te melden voor het treffen.',
@@ -116,6 +118,8 @@ const content = {
 
 				<label for="person-count">{content.personCount}</label>
 				<input id="person-count" name="personCount" type="number" min="1" step="1" inputmode="numeric" required />
+
+				<p class="fee-note">{content.pricePerPerson}</p>
 
 				<label for="registration-fee">{content.registrationFee}</label>
 				<input id="registration-fee" name="registrationFeeDisplay" type="text" readonly aria-readonly="true" />
@@ -355,6 +359,13 @@ const content = {
 
 	.rules-card li {
 		line-height: 1.5;
+	}
+
+	.fee-note {
+		margin: 0;
+		font-weight: 700;
+		color: #4b0f34;
+		font-size: 0.95rem;
 	}
 
 	.spinner {
