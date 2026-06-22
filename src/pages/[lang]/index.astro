@@ -4,12 +4,14 @@ import { getLocaleData } from '../../data/site-content';
 
 const { lang } = Astro.params;
 const { activeLang, locale, menu, languages } = getLocaleData(lang);
-const signupCtaTitle = 'Binnenkort inschrijven!';
+const signupCtaTitle = activeLang === 'lim' ? 'Schrief uch noe in!' : 'Schrijf je nu in!';
 const signupCtaText =
   activeLang === 'lim'
-    ? 'Wil se mitdoon? Meld uch team aan veur 20 augustus 2026 en zeen os op 4 september bie De Maar.'
-    : 'Wil je meedoen? Meld je team aan voor 20 augustus 2026 en zie ons op 4 september bij De Maar.';
-const signupCtaButton = activeLang === 'lim' ? 'Naar inschrieve' : 'Naar inschrijven';
+    ? 'Wil se mitdoon? Meld uch team aan veur 16 augustus 2026 en zeen os op 4 september bie De Maar.'
+    : 'Wil je meedoen? Meld je team aan voor 16 augustus 2026 en zie ons op 4 september bij De Maar.';
+const signupCtaButton = activeLang === 'lim' ? 'Nao insjrieving en info' : 'Naar inschrijving en info';
+const signupCtaHref = `/${activeLang}/inschrijven`;
+
 ---
 
 <Layout

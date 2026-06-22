@@ -9,6 +9,8 @@ const status = Astro.url.searchParams.get('status');
 const content = {
 	lim: {
 		title: 'Inschrieve',
+		eventTitle: 'Dit is ’t 3e oape Joabiks Zoerveisjtreff',
+		eventMeta: 'Datum: 4 september 2026, begin um 18:00 bie Brasserie De Maar in de wei.',
 		intro: 'Vul hie de geveens in um uch aan te melde veur ’t treffe.',
 		firstName: 'Voornaam',
 		lastName: 'Achternaam',
@@ -36,6 +38,8 @@ const content = {
 	},
 	nl: {
 		title: 'Inschrijven',
+		eventTitle: 'Dit is het 3e oape Joabiks Zoerveisjtreff',
+		eventMeta: 'Datum: 4 september 2026, start om 18:00 bij Brasserie De Maar in de wei.',
 		intro: 'Vul hieronder je gegevens in om je aan te melden voor het treffen.',
 		firstName: 'Voornaam',
 		lastName: 'Achternaam',
@@ -76,6 +80,10 @@ const content = {
 	<section class="signup-wrap">
 		<div class="signup-card">
 			<h1>{content.title}</h1>
+			<section class="event-note" aria-label={content.eventTitle}>
+				<p class="event-note-title">{content.eventTitle}</p>
+				<p class="event-note-meta">{content.eventMeta}</p>
+			</section>
 			<p>{content.intro}</p>
 
 			{status === 'ok' && <p class="form-status success">{content.success}</p>}
@@ -185,6 +193,25 @@ const content = {
 
 	.signup-card p {
 		margin: 0 0 1rem;
+	}
+
+	.event-note {
+		margin: 0 0 1rem;
+		padding: 0.8rem 0.9rem;
+		border-radius: 0.75rem;
+		background: linear-gradient(140deg, #fff7df, #ffedf7);
+		border: 1px solid rgba(159, 37, 114, 0.16);
+	}
+
+	.event-note-title {
+		margin: 0;
+		font-weight: 800;
+		color: #6a1047;
+	}
+
+	.event-note-meta {
+		margin: 0.35rem 0 0;
+		font-weight: 600;
 	}
 
 	.signup-form {
