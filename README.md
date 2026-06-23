@@ -51,6 +51,20 @@ npm run preview
 
 The signup form can now send data to one or more webhooks on submit.
 
+Current signup data includes:
+
+- Voornaam
+- Achternaam
+- Adres
+- Postcode
+- Woonplaats
+- Telefoonnummer
+- E-mail
+- Aantal personen
+- Inschrijfgeld, calculated at € 6,90 per person
+
+The signup page also shows the event note for the 3e oape Joabiks Zoerveisjtreff and the current rules text in Dutch and Limburgs.
+
 ### Environment Variables for Signups
 
 Configure one or more of these environment variables:
@@ -85,6 +99,8 @@ If none of the webhook URLs are configured, form submissions will show an error.
 9. In Cloudflare Pages, set `SIGNUP_SHEET_WEBHOOK_URL` = your Web app URL.
 10. Optionally, set `SIGNUP_WEBHOOK_SECRET` = same value as `SHARED_SECRET`.
 
+The Apps Script now normalizes the sheet header row before appending, so it can recover from an older column layout. The phone column is written as text, and an extra `phoneTelLink` column is stored as a `tel:` link target.
+
 ### Local Development
 
 For local testing, create a `.env` file (use `.env.example` as reference) with:
@@ -94,6 +110,26 @@ SIGNUP_WEBHOOK_SECRET=your_secret_here
 ```
 
 Then run `npm run dev` and the form will use these local secrets.
+
+### Current Sheet Columns
+
+The signup sheet is expected to contain these columns in order:
+
+1. timestamp
+2. firstName
+3. lastName
+4. address
+5. postalCode
+6. city
+7. phone
+8. phoneTelLink
+9. email
+10. personCount
+11. registrationFee
+12. lang
+13. source
+
+If the sheet already exists with an older header row, the Apps Script will rewrite the header row before appending the next submission.
 
 ## Learn More
 

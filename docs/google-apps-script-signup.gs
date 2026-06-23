@@ -4,6 +4,21 @@
 const SHEET_NAME = 'Signups';
 const EMAIL_TO = 'you@example.com';
 const SHARED_SECRET = ''; // Optional: set same value as SIGNUP_WEBHOOK_SECRET
+const SHEET_HEADERS = [
+  'timestamp',
+  'firstName',
+  'lastName',
+  'address',
+  'postalCode',
+  'city',
+  'phone',
+  'phoneTelLink',
+  'email',
+  'personCount',
+  'registrationFee',
+  'lang',
+  'source',
+];
 
 function doPost(e) {
   try {
@@ -34,6 +49,8 @@ function doPost(e) {
     }
 
     const sheet = getOrCreateSheet_(SHEET_NAME);
+    ensureHeaders_(sheet);
+
     sheet.appendRow([
       timestamp,
       firstName,
@@ -71,7 +88,20 @@ function doPost(e) {
       'Tijdstip: ' + timestamp,
     ].join('\n');
 
-    MailApp.sendEmail(EMAIL_TO, subject, body);
+    sendNotificationEmail_(subject, body);
+    sendApplicantConfirmationEmail_(
+      email,
+      firstName,
+      lastName,
+      address,
+      postalCode,
+      city,
+      phone,
+      personCount,
+      registrationFee,
+      lang,
+      timestamp
+    );
 
     return jsonResponse_({ ok: true });
   } catch (err) {
@@ -85,15 +115,76 @@ function getOrCreateSheet_(sheetName) {
 
   if (!sheet) {
     sheet = ss.insertSheet(sheetName);
-    sheet.appendRow(['timestamp', 'firstName', 'lastName', 'address', 'postalCode', 'city', 'phone', 'phoneTelLink', 'email', 'personCount', 'registrationFee', 'lang', 'source']);
   }
 
   return sheet;
 }
 
+function ensureHeaders_(sheet) {
+  const headerRange = sheet.getRange(1, 1, 1, SHEET_HEADERS.length);
+  const currentHeaders = headerRange.getValues()[0].map((value) => String(value || '').trim());
+  const hasHeaders = currentHeaders.some((value) => value);
+  const headersMatch = SHEET_HEADERS.every((header, index) => currentHeaders[index] === header);
+
+  if (!hasHeaders || !headersMatch) {
+    headerRange.setValues([SHEET_HEADERS]);
+  }
+}
+
 function jsonResponse_(data) {
   // Apps Script web apps don't reliably support custom HTTP status codes.
   return ContentService.createTextOutput(JSON.stringify(data)).setMimeType(ContentService.MimeType.JSON);
+}
+
+function sendNotificationEmail_(subject, body) {
+  const recipient = String(EMAIL_TO || '').trim();
+
+  if (!recipient || recipient === 'you@example.com') {
+    console.log('Signup email skipped: EMAIL_TO is not configured');
+    return;
+  }
+
+  try {
+    MailApp.sendEmail(recipient, subject, body);
+  } catch (err) {
+    console.log('Signup email failed: ' + err);
+  }
+}
+
+function sendApplicantConfirmationEmail_(recipient, firstName, lastName, address, postalCode, city, phone, personCount, registrationFee, lang, timestamp) {
+  const emailRecipient = String(recipient || '').trim();
+
+  if (!emailRecipient) {
+    console.log('Applicant confirmation skipped: no recipient email');
+    return;
+  }
+
+  const subject = 'Bevestiging van je inschrijving Zoervleisjtreffe';
+  const body = [
+    'Bedankt voor je aanmelding voor het Zoervleisjtreffe.',
+    '',
+    'Je gegevens:',
+    'Voornaam: ' + firstName,
+    'Achternaam: ' + lastName,
+    'Adres: ' + address,
+    'Postcode: ' + postalCode,
+    'Woonplaats: ' + city,
+    'Telefoonnummer: ' + phone,
+    'Aantal personen: ' + personCount,
+    'Inschrijfgeld: ' + (registrationFee.toFixed ? registrationFee.toFixed(2).replace('.', ',') : registrationFee),
+    'Taal: ' + lang,
+    'Tijdstip van aanmelding: ' + timestamp,
+    '',
+    'De aanmeldingen worden behandeld op volgorde van binnenkomst.',
+    'Je ontvangt later een aparte bevestiging of je daadwerkelijk kunt meedoen.',
+    'Na die bevestiging ontvang je in de laatste weken van augustus een Tikkie.',
+  ].join('\n');
+
+  try {
+    MailApp.sendEmail(emailRecipient, subject, body);
+  } catch (err) {
+    console.log('Applicant confirmation failed: ' + err);
+  }
 }
 
 function getHeaderValue_(e, headerName) {
