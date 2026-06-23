@@ -99,7 +99,9 @@ If none of the webhook URLs are configured, form submissions will show an error.
 9. In Cloudflare Pages, set `SIGNUP_SHEET_WEBHOOK_URL` = your Web app URL.
 10. Optionally, set `SIGNUP_WEBHOOK_SECRET` = same value as `SHARED_SECRET`.
 
-The Apps Script now normalizes the sheet header row before appending, so it can recover from an older column layout. The phone column is written as text, and an extra `phoneTelLink` column is stored as a `tel:` link target.
+The Apps Script now recreates the header row before appending, so it can recover from a cleared sheet or an older column layout without overwriting existing data. The phone column is written as text, and an extra `phoneTelLink` column is stored as a `tel:` link target.
+
+If `EMAIL_TO` is left at the placeholder value, the script falls back to the Apps Script owner's email address when possible. For a fixed notification address, set `EMAIL_TO` in the script or as a script property.
 
 ### Local Development
 
@@ -129,7 +131,7 @@ The signup sheet is expected to contain these columns in order:
 12. lang
 13. source
 
-If the sheet already exists with an older header row, the Apps Script will rewrite the header row before appending the next submission.
+If the sheet already exists with an older header row, the Apps Script will restore the header row before appending the next submission. If the first row contained data, that row is preserved by inserting the headers above it.
 
 ## Learn More
 

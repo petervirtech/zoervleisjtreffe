@@ -20,6 +20,19 @@ const SHEET_HEADERS = [
   'source',
 ];
 
+function getConfiguredRecipient_() {
+  const scriptPropertiesRecipient = PropertiesService.getScriptProperties().getProperty('EMAIL_TO');
+  const configuredRecipient = String(scriptPropertiesRecipient || EMAIL_TO || '').trim();
+
+  if (configuredRecipient && configuredRecipient !== 'you@example.com') {
+    return configuredRecipient;
+  }
+
+  const effectiveUser = String(Session.getEffectiveUser().getEmail() || '').trim();
+
+  return effectiveUser || configuredRecipient;
+}
+
 function doPost(e) {
   try {
     const secret = getHeaderValue_(e, 'x-signup-secret');
@@ -127,7 +140,14 @@ function ensureHeaders_(sheet) {
   const headersMatch = SHEET_HEADERS.every((header, index) => currentHeaders[index] === header);
 
   if (!hasHeaders || !headersMatch) {
+    const hasDataRows = sheet.getLastRow() > 0;
+
+    if (hasDataRows && hasHeaders) {
+      sheet.insertRowBefore(1);
+    }
+
     headerRange.setValues([SHEET_HEADERS]);
+    sheet.setFrozenRows(1);
   }
 }
 
@@ -137,9 +157,9 @@ function jsonResponse_(data) {
 }
 
 function sendNotificationEmail_(subject, body) {
-  const recipient = String(EMAIL_TO || '').trim();
+  const recipient = getConfiguredRecipient_();
 
-  if (!recipient || recipient === 'you@example.com') {
+  if (!recipient) {
     console.log('Signup email skipped: EMAIL_TO is not configured');
     return;
   }
