@@ -38,10 +38,25 @@ const signupCtaHref = `/${activeLang}/inschrijven`;
     </section>
 
     <div class="info-stack">
-      {locale.pages.home.sections.map((section) => (
+      {locale.pages.home.sections.map((section, index) => (
         <section class="home-card">
           <h2>{section.title}</h2>
-          <p>{section.description}</p>
+          {index === 1 ? (
+            <div class="how-it-works-preview">
+              <p class="how-it-works-lead">{locale.pages.howItWorks.intro}</p>
+              <p class="how-it-works-intro">{locale.pages.howItWorks.overview}</p>
+              <div class="how-it-works-steps">
+                {locale.pages.howItWorks.steps.map((step) => (
+                  <article class="how-it-works-step">
+                    <h3>{step.title}</h3>
+                    <p>{step.description}</p>
+                  </article>
+                ))}
+              </div>
+            </div>
+          ) : (
+            <p>{section.description}</p>
+          )}
         </section>
       ))}
     </div>
@@ -129,6 +144,43 @@ const signupCtaHref = `/${activeLang}/inschrijven`;
   .info-stack {
     display: grid;
     gap: 1rem;
+  }
+
+  .how-it-works-preview {
+    display: grid;
+    gap: 0.9rem;
+  }
+
+  .how-it-works-lead {
+    margin: 0;
+    font-weight: 600;
+    color: rgba(110, 18, 77, 0.92);
+  }
+
+  .how-it-works-intro {
+    margin: 0;
+    color: rgba(110, 18, 77, 0.86);
+  }
+
+  .how-it-works-steps {
+    display: grid;
+    gap: 0.75rem;
+  }
+
+  .how-it-works-step {
+    padding: 0.9rem 1rem;
+    border-radius: 0.85rem;
+    background: linear-gradient(135deg, rgba(159, 37, 114, 0.05), rgba(254, 153, 0, 0.08));
+    border: 1px solid rgba(159, 37, 114, 0.08);
+  }
+
+  .how-it-works-step h3 {
+    margin: 0 0 0.35rem;
+    font-size: 1rem;
+  }
+
+  .how-it-works-step p {
+    margin: 0;
   }
 
   @media (min-width: 840px) {
