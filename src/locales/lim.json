@@ -1,9 +1,9 @@
 {
-  "pageTitle": "3e Oape Joabiks Frit-Zoervleisj Treffe",
+  "pageTitle": "3e Oape Joabiks Frit Zoervleisj Treffe",
   "ui": {
     "navLabel": "Haofmenju",
     "languageLabel": "Sproak",
-    "brandTagline": "Oape Joabiks zoervleisj treffe",
+    "brandTagline": "Oape Joabiks Frit Zoervleisj treffe",
     "languages": {
       "lim": "Limburgs",
       "nl": "Nederlands"
@@ -11,75 +11,74 @@
   },
   "nav": {
     "home": "Thous",
-    "history": "Geschjiedenis",
+    "history": "Gesjiedenis",
     "howItWorks": "Zoe wirk 't",
     "faq": "FAQ",
-    "signup": "Inschrieve"
+    "signup": "Insjrieve"
   },
   "pages": {
     "home": {
-      "title": "3e Oape Joabiks Frit-Zoervleisj Treffe!",
-      "description": "Onthou deze daag! Op vriedig 4 september 2026 höbbe veer weer 't 3de Oape Joabiks Zoervleisjtreffe. Zèt dees daag vast in dien agenda! 't Geit door bie brasserie De Maar. Houw ouch de website en socials in de gate veur updates!",
+      "title": "3e Oape Joabiks Frit Zoervleisj Treffe!",
+      "description": "Onthou deze daag! Op vriedig 4 september 2026 höbbe veer weer 't 3de Oape Joabiks Frit Zoervleisj treffe. Zèt dees daag vast in dien agenda! 't Geit gebeure bie brasserie De Maar. Houw ouch de website en socials in de gate veur updates!",
       "sections": [
         {
-          "title": "Geschjiedenis",
-          "description": "’t Zuurvlees treffe is al tied mei-ein plek um same te kumpen, te praote en good te ete. Dees editie bouwt d'r auf veur op waat veer al eerdder samen hes gemaak."
+          "title": "Gesjiedenis",
+          "description": "’t Zoervlees treffe is al joare ein plek om same te koome, te praote en good te eate. Dees editie boewt wiejer op wat veer al eerder samen hubbe neergezat. Woarom 'Oape'Zoervleisjtreffe? Veer will eederein de kans geave om zien beste Zoervleisj recep te maake, te deile en te loate beoordeele. neet allein veur 'luuj va Joabik'"
         },
         {
-          "title": "Zoe wirk 't",
-          "description": "Hou de datum vry, koom langs bie brasserie De Maar en volg de website veur nuijes. Meer praktiese info kump later online, same mit updates oaver ’t programma."
+          "title": "Zo wirk 't",
+          "description": "Hou de datum vrie, koom langs bie brasserie De Maar en volg de website veur nuijts. Meer praktiese info kump later online, same mit updates oaver ’t program."
         }
       ]
     },
     "history": {
-      "title": "Geschjiedenis",
+      "title": "Gesjiedenis",
       "intro": "Historie vaan 't Oape Joabiks Frit Zoervleisjtreffe",
-      "lead": "Noa 2 sjlaagde edisies höbbe veer de cadans wer opgepak um eine 3de editie te organisere. Um de 9 jaor is 't fees in Joabik, en meuge veer allemoal os eiges Zoervleisj-resep weer verdedige.",
-      "origin": "Begonne es e gek idee vaan e paar man: luuj vaan Joabik en wied dao boete de kans geve um hun eiges, beste en originele Zoervleisj-resep in good gezelschap te ete, en dat door eine vakjury te laote beoordele.",
+      "lead": "Noa 2 sjlaagde edisies höbbe veer de cadans wer opgepak om eine 3de editie te organisere. om de 9 jaor is 't fees in Joabik, en moage veer allemoal os eiges Zoervleisj resep weer verdedige.",
+      "origin": "Begonne es e gek idee van e paar man: luuj vaan Joabik en wied dao boete de kans geve um hun eige, beste en originele Zoervleisj resep in good gezelschap te ete, en dat door eine vakjury te laote beoordele.",
       "chapters": [
         {
           "year": "2008",
-          "title": "De ierste editie",
-          "description": "In 2008 höbbe veer mit eine groepe de eerpels vaan John Frijns same gesjild en in friet gesneje. De daag d'r noa weurd 't terrein in 't jeugdhonk ingericht en begonne mit veurbakke. Toe um 18.00 oer de ierste gaste aankwaome, weure de letste friete nog veurgebakke. Wat e werk, mer wat waor 't gezellig in 't auwd jeugdhonk bie de voetbalclub."
+          "title": "De ierste editie", in 2008 hubbe veer mit ein gruupke de earpel van John Frijns same gesjild en in friet gesneje. De daag d'r noa woard 't terrein bie 't jeugdhonk ingerich en is begonne mit veurbakke. Toe om 18.00 oer de eesjte gaste aankwaome, weurte de letste friete nog veurgebakke. Wat e werk, mer wat waor 't gezellig in 't auwd jeugdhonk bie de voetbalclub."
         },
         {
           "year": "2017",
           "title": "De twiede editie",
-          "description": "In 2017 weurd de 2de editie op De Maar gehaoje in feesttènte. Dees kier höbbe veer de friete oetbesteed aan Frituur Proche, die ouch de friete vaan John höbbe gesneje en veurgebakke. 't Weurd weer eine sjiek gezellige editie."
+          "description": "In 2017 weurd de 2de editie op De Maar gehaoje in feesttènte. Dees kier höbbe veer de friete oetbesteed aan Frituur Proche, die ouch de friete van John höbbe gesneje en veurgebakke. 't Weurd weer eine sjieke gezellige editie."
         },
         {
           "year": "2026",
           "title": "De derde editie",
-          "description": "Op vriedig 4 september 2026 is de 3de editie vaan 't Oape Joabiks Frit Zoervleisjtreffe. Veer viere 't onder de tènt in de wei bie Brasserie De Maar. De friete kómme dit jaor vaan Sweet and Savoury, en neet te vergaeite: de dranks vaan de Brasserie en de beerkes vaan Brouwerij De Maar."
+          "description": "Op vriedig 4 september 2026 is de 3de editie vaan 't Oape Joabiks Frit Zoervleisjtreffe. Veer viere 't onder de tènt in de wei bie Brasserie De Maar. De friete kómme dit jaor van Sweet and Savoury, en neet te vergaete: de drank van de Brasserie en de beerkes vaan Brouwerij De Maar. De drankbonne wear dea oavend via de Brasserie verkoch"
         }
       ],
-      "closing": "'t Wurt zowiezoe eine sjoen weekend, want op 5 september is ouch de 2de Kal en Zeng Plant Middig."
+      "closing": "'t Wurt zowiezoe eine sjoan weekend, want op 5 september is ouch de 2de Kal en Zeng Plant Middig."
     },
     "howItWorks": {
-      "title": "Zoe wirk 't",
-      "intro": "Jullie maake eige Zoervleisj, genóg veur uchzelf en de gaste, mit d’r bie eine kleine porsie veur de jury. Daonaa ete veer de zelfgemaakte Zoervleisj same mit vrujnd en famillie.",
-      "overview": "Hie steit in ’t kort hoe de insjrieving, ’t kóke en de beoordeling wirk. Gebroek de blokke as richtlijn veur dien eigen veurbereiding.",
+      "title": "Zo wirkt 't",
+      "intro": "Geer maakt uch eige Zoervleisj, genóg veur uchzelf en de gaste, mit d’r bie eine kleine porsie veur de jury. Daonoa kint geer de zelfgemaakte Zoervleisj same mit vrujnd en famillie aan toafel, veer bringe de frietjes rond.",
+      "overview": "Hie steit in ’t kort wie de insjrieving, ’t koake en de beoordeling wirk. Gebroek de blokke as richtlijn veur dien eigen veurbereiding.",
       "steps": [
         {
-          "title": "Inschrieve",
-          "description": "Julle schrieve uch in mit alle mede-Zoervleisjeters. Priès per persoon: € 6,90. ’t Inschrievgeld en dit formulier levere veer same in bie de organisatie, veur 20 augustus 2026."
+          "title": "Insjrieve",
+          "description": "Geer sjrieft uch uch in mit alle mede-Zoervleisj eaters. Priès per persoon: € 6,90. 't Insjriefformulier wurt door ons verzamelt, an veer sjtuure ein tikkie veur de koste. Insjrieve veur 16 augustus 2026."
         },
         {
-          "title": "Kóke",
-          "description": "Julle make diene eigne Zoervleisj in eine geskikte pan. Opwèrme kaan op eine elektrische kooktoestel. Veer zörgke veur de friete, mayonaise en appelmoes."
+          "title": "Koake",
+          "description": "Geer maakt uch eige Zoervleisj in eine gesjikte pan. Opwèrme kent op eine elektrische koaktoesjtel. Veer zörgke veur de friete, mayonaise en appelmoos."
         },
         {
-          "title": "Same ete",
-          "description": "Na ’t kóke ete julle de zelfgemaakte Zoervleisj same mit vrujnd en famillie aan taofel."
+          "title": "Same eate",
+          "description": "Noa ’t koake it geer de zelfgemaakte Zoervleisj same mit vrujnd en familie aan taofel."
         },
         {
           "title": "Beoordeling",
-          "description": "Eine klein deel van diene Zoervleisj geit nao de vakjury, mit eine Vakslager, Notabele en Bon Vivant. Dees beoordéle ’t gerècht en interviewe de top 10 oaver hun resep-ideeë."
+          "description": "Ein klein deel van dien Zoervleisj geit nao de vakjury, mit eine Vaksjlager, ein Notabele en ein Bon Vivant. Dees beoordéle ’t gerècht en interviewe de top 10 euver hun resep-ideeë."
         }
       ],
       "jury": {
         "title": "De vakjury",
-        "description": "Ut de beoordeling kump eine top 3 en ouch eine poedelpries. De jury let op smaok, verhaal, samehang en de eigne twist van uch recept. De oetslaag van de jury is bindend. Euver de oetslaag weurt neet gecorrespondeerd."
+        "description": "Oet de beoordeling kump ein top 3 en ouch eine poedelpries. De jury let op sjmaak, verhoal, samehang en de eige twist van uch recept. De oetsjlaag van de jury is bindend. Euver de oetslaag weurt neet gecorrespondeerd."
       },
       "imagePlaceholders": [
         {
@@ -94,22 +93,22 @@
     },
     "faq": {
       "title": "Veul gevraogde vraoge",
-      "intro": "Veul gevraogde vraoge euver deilnaome, insjrieving en waat d'r waal of neet in de pan kump.",
+      "intro": "Veul gevraogde vraoge euver deilnaome, insjrieving en wat d'r waal of neet in de pan kump.",
       "items": [
         {
-          "question": "Mag ich ouch allein beer kómme drinke?",
-          "answer": "Nae, allein toegang es se Zoervleisj kump ete."
+          "question": "Moag ich ouch allein beer kómme drinke?",
+          "answer": "Nae, allein toegang es se Zoervleisj kums eate."
         },
         {
           "question": "Ich kan zelf gein Zoervleisj make?",
-          "answer": "Pech gehaad, mer schrief uch in same mit ein die dat waal good kin. Dan maag se kómme."
+          "answer": "Pech gehad, mer schrief uch in same mit ein die dat waal good kin. Dan moag se kómme."
         },
         {
-          "question": "Mag mien oma ’t Zoervleisj make?",
-          "answer": "Zeker, mer vertèl dat neet tege de jury."
+          "question": "Moag mien oma ’t Zoervleisj make?",
+          "answer": "Zeker, mer vertèl dat neet teage de jury."
         },
         {
-          "question": "Mag ich Zoervleisj van de Sligro aanbiede?",
+          "question": "Moag ich Zoervleisj van de Sligro aanbiede?",
           "answer": "Wat denks te zelf...."
         }
       ]
