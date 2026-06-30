@@ -3,7 +3,7 @@
   "ui": {
     "navLabel": "Hoofdmenu",
     "languageLabel": "Taal",
-    "brandTagline": "Oape Joabiks Frit-zoervleisj treffe",
+    "brandTagline": "Oape Joabiks Frit Zoervleisj treffe",
     "languages": {
       "lim": "Limburgs",
       "nl": "Nederlands"
@@ -23,7 +23,7 @@
       "sections": [
         {
           "title": "Geschiedenis",
-          "description": "Het zuurvlees treffen is al jaren een vaste plek om samen te komen, bij te praten en goed te eten. Deze editie bouwt voort op wat we eerder samen hebben neergezet."
+          "description": "Het zuurvlees treffen is al jaren een vaste plek om samen te komen, bij te praten en goed te eten. Deze editie bouwt voort op wat we eerder samen hebben neergezet. Waarom 'Oape' Zoervleisjtreffe? We willen iedereen de kans geven om zijn beste Zoervleisj recet te maken, te delen en te laten beoordelen, niet alleen 'luuj va Joabik'"
         },
         {
           "title": "Hoe het werkt",
@@ -62,7 +62,7 @@
       "steps": [
         {
           "title": "Inschrijven",
-          "description": "Jullie schrijven je in met alle mede-Zoervleisjeters. Prijs per persoon: € 6,90. Inschrijfgeld en formulier lever je samen in bij de organisatie, vóór 20 augustus 2026."
+          "description": "Jullie schrijven je in met alle mede-Zoervleisjeters. Prijs per persoon: € 6,90. Inschrijfformulier wordt door ons verzameld, en je ontvangt een tikkie voor de kosten. Inschrijven vóór 20 augustus 2026."
         },
         {
           "title": "Koken",
@@ -70,7 +70,7 @@
         },
         {
           "title": "Samen eten",
-          "description": "Na het koken eten jullie de zelfgemaakte Zoervleisj samen met vrienden en familie aan tafel."
+          "description": "Na het koken eten jullie de zelfgemaakte Zoervleisj samen met vrienden en familie aan tafel. Wij brengen de frietjes rond."
         },
         {
           "title": "Beoordeling",
