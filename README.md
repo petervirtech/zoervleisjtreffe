@@ -47,9 +47,9 @@ To preview the production build locally:
 npm run preview
 ```
 
-## Signup Notifications And Storage
+## Signup Submissions
 
-The signup form can now send data to one or more webhooks on submit.
+The signup form now sends each submission to an n8n webhook. Local development uses the test webhook and production uses the live webhook.
 
 Current signup data includes:
 
@@ -63,75 +63,52 @@ Current signup data includes:
 - Aantal personen
 - Inschrijfgeld, calculated at € 6,90 per person
 
-The signup page also shows the event note for the 3e oape Joabiks Zoerveisjtreff and the current rules text in Dutch and Limburgs.
+The signup page also shows the event note for the 3e oape Joabiks Zoervleisjtreffe and the current rules text in Dutch and Limburgs.
 
 ### Environment Variables for Signups
 
 Configure one or more of these environment variables:
 
-- `SIGNUP_EMAIL_WEBHOOK_URL`: endpoint that sends you an email notification
-- `SIGNUP_SHEET_WEBHOOK_URL`: endpoint that appends rows to Google Sheets
-- `SIGNUP_TEXTFILE_WEBHOOK_URL`: endpoint that writes to a text file/log
+- `SIGNUP_N8N_TEST_WEBHOOK_URL`: test webhook used during local development
+- `SIGNUP_N8N_WEBHOOK_URL`: production webhook used in Cloudflare Pages
 - `SIGNUP_WEBHOOK_SECRET`: optional shared secret sent as `x-signup-secret`
 
-If none of the webhook URLs are configured, form submissions will show an error.
+If the URLs are not configured, the app falls back to these defaults:
+
+- `https://n8n.virtech.nl/webhook-test/signup` for local/test usage
+- `https://n8n.virtech.nl/webhook/signup` for production usage
 
 ### Setting up Cloudflare Pages Secrets
 
 1. Go to your Cloudflare Pages project dashboard
 2. Settings > Environment variables
 3. Under **Production** environment, add:
-   - Name: `SIGNUP_SHEET_WEBHOOK_URL` | Value: your Google Apps Script Web App URL
+   - Name: `SIGNUP_N8N_WEBHOOK_URL` | Value: your n8n production webhook URL
    - Name: `SIGNUP_WEBHOOK_SECRET` (optional) | Value: any random string
 
 **Important:** Secrets must be added as **Production** environment variables in Cloudflare. They are accessed at runtime via `process.env`.
 
-### Setting up Google Sheets + Email Integration
+### Setting up n8n
 
-1. Open Google Sheets and create a new sheet for signups.
-2. In that sheet, open **Extensions > Apps Script**.
-3. Paste the contents of `docs/google-apps-script-signup.gs`.
-4. Set `EMAIL_TO` to your email address.
-5. Optional: set `SHARED_SECRET` to a random string (same as `SIGNUP_WEBHOOK_SECRET`).
-6. Click **Deploy > New deployment > Type: Web app**.
-7. Choose **Execute as: Me**, **Who has access: Anyone**.
-8. Copy the Web app URL.
-9. In Cloudflare Pages, set `SIGNUP_SHEET_WEBHOOK_URL` = your Web app URL.
-10. Optionally, set `SIGNUP_WEBHOOK_SECRET` = same value as `SHARED_SECRET`.
-
-The Apps Script now recreates the header row before appending, so it can recover from a cleared sheet or an older column layout without overwriting existing data. The phone column is written as text, and an extra `phoneTelLink` column is stored as a `tel:` link target.
-
-If `EMAIL_TO` is left at the placeholder value, the script falls back to the Apps Script owner's email address when possible. For a fixed notification address, set `EMAIL_TO` in the script or as a script property.
+1. Create one n8n workflow for testing and one for production, both with a webhook trigger.
+2. Use the path signup for both workflows.
+3. Activate the production workflow so the live webhook is available.
+4. In the workflow, map the fields from the incoming JSON payload to your target storage.
+5. Optional: read the x-signup-secret header if you want an extra shared-secret check.
 
 ### Local Development
 
 For local testing, create a `.env` file (use `.env.example` as reference) with:
 ```
-SIGNUP_SHEET_WEBHOOK_URL=https://script.google.com/macros/s/YOUR_SCRIPT_ID/userweb
+SIGNUP_N8N_TEST_WEBHOOK_URL=https://n8n.virtech.nl/webhook-test/signup
 SIGNUP_WEBHOOK_SECRET=your_secret_here
 ```
 
 Then run `npm run dev` and the form will use these local secrets.
 
-### Current Sheet Columns
+### Legacy Google Sheets Option
 
-The signup sheet is expected to contain these columns in order:
-
-1. timestamp
-2. firstName
-3. lastName
-4. address
-5. postalCode
-6. city
-7. phone
-8. phoneTelLink
-9. email
-10. personCount
-11. registrationFee
-12. lang
-13. source
-
-If the sheet already exists with an older header row, the Apps Script will restore the header row before appending the next submission. If the first row contained data, that row is preserved by inserting the headers above it.
+The file `docs/google-apps-script-signup.gs` is still available if you want to keep the older direct-to-Google-Sheets approach as a fallback or reference.
 
 ## Learn More
 

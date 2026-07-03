@@ -1,5 +1,7 @@
 import type { APIRoute } from 'astro';
 
+const DEFAULT_N8N_TEST_WEBHOOK_URL = 'https://n8n.virtech.nl/webhook-test/signup';
+const DEFAULT_N8N_WEBHOOK_URL = 'https://n8n.virtech.nl/webhook/signup';
 const ALLOWED_LANGS = new Set(['lim', 'nl']);
 
 function sanitize(value: FormDataEntryValue | null) {
@@ -18,6 +20,25 @@ function getEnvValue(locals: Record<string, any> | undefined, key: string) {
 	return runtimeEnv?.[key] ?? metaEnv[key] ?? processEnv[key];
 }
 
+function isLocalRequest(requestUrl: string) {
+	const hostname = new URL(requestUrl).hostname;
+
+	return hostname === 'localhost' || hostname === '127.0.0.1' || hostname === '::1' || hostname.endsWith('.local');
+}
+
+function getSignupWebhookUrl(requestUrl: string, locals: Record<string, any> | undefined) {
+	const runtimeEnv = locals?.runtime?.env as Record<string, string | undefined> | undefined;
+	const metaEnv = import.meta.env as Record<string, string | undefined>;
+	const processEnv = process.env as Record<string, string | undefined>;
+	const useTestWebhook = isLocalRequest(requestUrl);
+
+	if (useTestWebhook) {
+		return runtimeEnv?.SIGNUP_N8N_TEST_WEBHOOK_URL ?? metaEnv.SIGNUP_N8N_TEST_WEBHOOK_URL ?? processEnv.SIGNUP_N8N_TEST_WEBHOOK_URL ?? DEFAULT_N8N_TEST_WEBHOOK_URL;
+	}
+
+	return runtimeEnv?.SIGNUP_N8N_WEBHOOK_URL ?? metaEnv.SIGNUP_N8N_WEBHOOK_URL ?? processEnv.SIGNUP_N8N_WEBHOOK_URL ?? DEFAULT_N8N_WEBHOOK_URL;
+}
+
 function getDebugEnvSource(locals: Record<string, any> | undefined) {
 	const runtimeEnv = locals?.runtime?.env as Record<string, string | undefined> | undefined;
 	const metaEnv = import.meta.env as Record<string, string | undefined>;
@@ -30,11 +51,7 @@ function getDebugEnvSource(locals: Record<string, any> | undefined) {
 	};
 }
 
-async function postWebhook(url: string | undefined, webhookSecret: string | undefined, payload: unknown) {
-	if (!url) {
-		return;
-	}
-
+async function postWebhook(url: string, webhookSecret: string | undefined, payload: unknown) {
 	const headers: HeadersInit = {
 		'Content-Type': 'application/json',
 	};
@@ -50,35 +67,20 @@ async function postWebhook(url: string | undefined, webhookSecret: string | unde
 	});
 
 	if (!response.ok) {
-		throw new Error(`Webhook failed (${response.status})`);
+		const responseText = await response.text().catch(() => '');
+		throw new Error(`Webhook failed (${response.status})${responseText ? `: ${responseText}` : ''}`);
 	}
-}
-
-function buildWebhookPayload(basePayload: Record<string, unknown>, webhookSecret: string | undefined) {
-	if (!webhookSecret) {
-		return basePayload;
-	}
-
-	return {
-		...basePayload,
-		'x-signup-secret': webhookSecret,
-		xSignupSecret: webhookSecret,
-	};
 }
 
 export const POST: APIRoute = async ({ request, locals }) => {
 	try {
-		const emailWebhookUrl = getEnvValue(locals as Record<string, any>, 'SIGNUP_EMAIL_WEBHOOK_URL');
-		const sheetWebhookUrl = getEnvValue(locals as Record<string, any>, 'SIGNUP_SHEET_WEBHOOK_URL');
-		const textfileWebhookUrl = getEnvValue(locals as Record<string, any>, 'SIGNUP_TEXTFILE_WEBHOOK_URL');
+		const webhookUrl = getSignupWebhookUrl(request.url, locals as Record<string, any>);
 		const webhookSecret = getEnvValue(locals as Record<string, any>, 'SIGNUP_WEBHOOK_SECRET');
 
 		const debugSource = getDebugEnvSource(locals as Record<string, any>);
-		console.info('Signup env debug', {
+		console.info('Signup webhook debug', {
 			envSource: debugSource,
-			hasEmailWebhookUrl: Boolean(emailWebhookUrl),
-			hasSheetWebhookUrl: Boolean(sheetWebhookUrl),
-			hasTextfileWebhookUrl: Boolean(textfileWebhookUrl),
+			webhookUrl,
 			hasWebhookSecret: Boolean(webhookSecret),
 		});
 
@@ -107,7 +109,7 @@ export const POST: APIRoute = async ({ request, locals }) => {
 			return Response.redirect(new URL(`/${lang}/inschrijven?status=error`, request.url), 303);
 		}
 
-		const payload = buildWebhookPayload({
+		const payload = {
 			firstName,
 			lastName,
 			address,
@@ -120,21 +122,9 @@ export const POST: APIRoute = async ({ request, locals }) => {
 			lang,
 			timestamp: new Date().toISOString(),
 			source: 'signup-page',
-		}, webhookSecret);
+		};
 
-		if (!emailWebhookUrl && !sheetWebhookUrl && !textfileWebhookUrl) {
-			console.error('Signup error: No signup webhooks configured', {
-				envSource: debugSource,
-				hint: 'Set SIGNUP_SHEET_WEBHOOK_URL in .env (local) or Cloudflare Pages environment variables.',
-			});
-			throw new Error('No signup webhooks configured');
-		}
-
-		await Promise.all([
-			postWebhook(emailWebhookUrl, webhookSecret, payload),
-			postWebhook(sheetWebhookUrl, webhookSecret, payload),
-			postWebhook(textfileWebhookUrl, webhookSecret, payload),
-		]);
+		await postWebhook(webhookUrl, webhookSecret, payload);
 
 		return Response.redirect(new URL(`/${lang}/inschrijven?status=ok`, request.url), 303);
 	} catch (error) {
