@@ -4,13 +4,12 @@ import { getLocaleData } from '../../data/site-content';
 
 const { lang } = Astro.params;
 const { activeLang, locale, menu, languages } = getLocaleData(lang);
-const signupCtaTitle = activeLang === 'lim' ? 'Schrief uch noe in!' : 'Schrijf je nu in!';
+const signupCtaTitle = activeLang === 'lim' ? 'Inschrieving gesjlaote' : 'Inschrijving gesloten';
 const signupCtaText =
   activeLang === 'lim'
-    ? 'Wil se mitdoon? Meld uch team aan veur 16 augustus 2026 en zeen os op 4 september bie De Maar. Priès per persoon: € 6,90.'
-    : 'Wil je meedoen? Meld je team aan voor 16 augustus 2026 en zie ons op 4 september bij De Maar. Prijs per persoon: € 6,90.';
-const signupCtaButton = activeLang === 'lim' ? 'Nao insjrieving en info' : 'Naar inschrijving en info';
-const signupCtaHref = `/${activeLang}/inschrijven`;
+    ? 'De inschrieving veur Zoervleisj Treffe 2026 is gesjlaote.'
+    : 'De inschrijving voor Zoervleisj Treffe 2026 is gesloten.';
+const signupCtaButton = activeLang === 'lim' ? 'Inschrieving gesjlaote' : 'Inschrijving gesloten';
 
 ---
 
@@ -26,15 +25,16 @@ const signupCtaHref = `/${activeLang}/inschrijven`;
   <div class="home-wrap">
     <section class="home-card hero-card">
       <h1>{locale.pages.home.title}</h1>
+      <img class="closed-image" src="/assets/images/gesloten.jpg" alt={signupCtaTitle} />
+
       <p>{locale.pages.home.description}</p>
 
       <div class="signup-cta" role="region" aria-label={signupCtaTitle}>
         <p class="signup-cta-title">{signupCtaTitle}</p>
         <p>{signupCtaText}</p>
-        <a class="signup-cta-button" href={`/${activeLang}/inschrijven`}>{signupCtaButton}</a>
+        <button class="signup-cta-button" type="button" disabled>{signupCtaButton}</button>
       </div>
 
-      <img class="hero-image" src="/assets/images/flyer.jpg" alt="Flyer" />
     </section>
 
     <div class="info-stack">
@@ -131,12 +131,21 @@ const signupCtaHref = `/${activeLang}/inschrijven`;
     transform: translateY(-1px);
   }
 
-  .hero-image {
+  .signup-cta-button:disabled {
+    background: #9f2572;
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+
+  .closed-image {
     display: block;
     width: 100%;
     max-width: 100%;
     height: auto;
+    max-height: min(70vh, 720px);
     object-fit: contain;
+    object-position: center;
+    margin: 0 auto;
     border-radius: 0.8rem;
     border: 1px solid rgba(159, 37, 114, 0.1);
   }
